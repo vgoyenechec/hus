@@ -1,5 +1,5 @@
 package hus.censoCamas.service;
-/*
+
 import hus.censoCamas.exception.UserNotFoundException;
 import hus.censoCamas.model.Usuario;
 import hus.censoCamas.repo.UsuarioRepo;
@@ -44,4 +44,3 @@ public class UsuarioService {
         return usuarioRepo.findUsuarioByUsuarioContaining(username);
     }
 }
-*/

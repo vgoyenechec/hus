@@ -1,5 +1,5 @@
 package hus.censoCamas.repo;
-/*
+
 import hus.censoCamas.model.Ingreso;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +10,3 @@ public interface IngresoRepo extends JpaRepository<Ingreso, Long> {
 
     void deleteIngresoById(Long id);
 }
-*/

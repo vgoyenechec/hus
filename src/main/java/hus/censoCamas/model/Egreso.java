@@ -1,13 +1,12 @@
 package hus.censoCamas.model;
-/*
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "ADNEGRESO")
 public class Egreso {
     @Id
     @Column(updatable = false,nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEgreso;
     private int idPaciente;
     private int idCama;
@@ -67,4 +66,3 @@ public class Egreso {
     }
 
 }
-*/

@@ -1,8 +1,8 @@
 package hus.censoCamas.model;
-/*
+
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "GENUSUARIO")
 public class Usuario {
     @Id
     @Column(updatable = false,nullable = false)
@@ -73,4 +73,3 @@ public class Usuario {
                 '}';
     }
 }
-*/

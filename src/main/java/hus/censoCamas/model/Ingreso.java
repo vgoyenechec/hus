@@ -1,4 +1,4 @@
-/*
+
 package hus.censoCamas.model;
 
 import javax.persistence.*;
@@ -9,13 +9,14 @@ public class Ingreso {
     @Id
     @Column(updatable = false,nullable = false)
     private int id;
-
+    /*
     @OneToMany
-    @JoinColumn(name = "PACNUMDOC")
+    @JoinColumn(name = "PACNUMDOC")*/
     private Paciente paciente;
 
+    /*
     @OneToMany
-    @JoinColumn(name = "idCama")
+    @JoinColumn(name = "idCama")*/
     private Cama cama;
 
     private LocalDateTime fechaIngreso;
@@ -73,4 +74,3 @@ public class Ingreso {
     }
 }
 
-*/

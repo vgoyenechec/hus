@@ -1,5 +1,5 @@
 package hus.censoCamas.repo;
-/*
+
 import hus.censoCamas.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +15,3 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Long> {
 
     List<Usuario> findUsuarioByUsuarioContaining(String usuario);
 }
-*/
