@@ -58,4 +58,10 @@ public class CamaResource {
         camaService.deleteCama(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/find/codigo=?{codigo}")
+    public ResponseEntity<Cama> findByCodigo(@PathVariable("codigo") int codigo){
+        Cama cama = camaService.findByCodigoCama(codigo);
+        return new ResponseEntity<>(cama, HttpStatus.OK);
+    }
 }

@@ -6,63 +6,58 @@ import java.time.LocalDateTime;
 @Entity(name = "ADNEGRESO")
 public class Egreso {
     @Id
-    @Column(updatable = false,nullable = false)
-    private Long idEgreso;
-    private int idPaciente;
-    private int idCama;
+    @Column(name = "OID", updatable = false,nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "ADENUMEGR")
+    private int idEgreso;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ADNINGRESO", referencedColumnName = "OID")
+    private Ingreso ingreso;
+
+    @Column(name = "ADEFECSAL")
     private LocalDateTime fechaEgreso;
 
     public Egreso(){
-
     }
 
-    public Egreso(Long idEgreso, int idPaciente, int idCama, LocalDateTime fechaEgreso) {
+    public Egreso(int idEgreso, Ingreso ingreso, LocalDateTime fechaEgreso) {
         this.idEgreso = idEgreso;
-        this.idPaciente = idPaciente;
-        this.idCama = idCama;
+        this.ingreso = ingreso;
         this.fechaEgreso = fechaEgreso;
     }
 
-    public Long getIdEgreso() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getIdEgreso() {
         return idEgreso;
     }
 
-    public void setIdEgreso(Long idEgreso) {
+    public void setIdEgreso(int idEgreso) {
         this.idEgreso = idEgreso;
     }
 
-    public int getIdPaciente() {
-        return idPaciente;
+    public Ingreso getIngreso() {
+        return ingreso;
     }
 
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setIngreso(Ingreso ingreso) {
+        this.ingreso = ingreso;
     }
 
-    public int getIdCama() {
-        return idCama;
-    }
-
-    public void setIdCama(int idCama) {
-        this.idCama = idCama;
-    }
-
-    public LocalDateTime getFechaRgreso() {
+    public LocalDateTime getFechaEgreso() {
         return fechaEgreso;
     }
 
-    public void setFechaRgreso(LocalDateTime fechaRgreso) {
-        this.fechaEgreso = fechaRgreso;
+    public void setFechaEgreso(LocalDateTime fechaEgreso) {
+        this.fechaEgreso = fechaEgreso;
     }
-
-    @Override
-    public String toString() {
-        return "Egreso{" +
-                "idEgreso=" + idEgreso +
-                ", idPaciente=" + idPaciente +
-                ", idCama=" + idCama +
-                ", fechaRgreso=" + fechaEgreso +
-                '}';
-    }
-
 }

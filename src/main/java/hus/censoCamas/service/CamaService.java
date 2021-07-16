@@ -51,4 +51,7 @@ public class CamaService {
         camaRepo.deleteCamaById(id);
     }
 
+    public Cama findByCodigoCama(int codigo){
+        return camaRepo.findByCodigo(codigo);
+    }
 }

@@ -2,13 +2,14 @@ package hus.censoCamas.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "GENPACIEN")
 public class Paciente implements Serializable {
     @Id
-    @Column(updatable = false,nullable = false)
+    @Column(name="OID",updatable = false,nullable = false)
     private Integer id;
     @Column(name = "PACNUMDOC")
     private String documento;
@@ -29,11 +30,15 @@ public class Paciente implements Serializable {
     @Column(name = "GPASEXPAC")
     private String sexo;
 
+    @OneToMany(mappedBy="paciente",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Ingreso> ingresos;
+
 
     public Paciente() {
     }
 
-    public Paciente(String documento, int tipoDocumento, String lugarExpedicion, String prinom, String segnom, String priape, String segape, LocalDateTime fechaNacimiento, String sexo) {
+    public Paciente(Integer id, String documento, int tipoDocumento, String lugarExpedicion, String prinom, String segnom, String priape, String segape, LocalDateTime fechaNacimiento, String sexo) {
+        this.id = id;
         this.documento = documento;
         this.tipoDocumento = tipoDocumento;
         this.lugarExpedicion = lugarExpedicion;

@@ -8,6 +8,7 @@ public class Cama implements Serializable {
     @Id
     @Column(name = "OID", updatable = false,nullable = false)
     private Integer id;
+
     @Column(name = "HCACODIGO")
     private String codigo;
     @Column(name = "HCANOMBRE")
@@ -20,14 +21,18 @@ public class Cama implements Serializable {
     private int tipo;
     @Column(name = "HCAESTADO")
     private int estadoCama;
-    @Column(name = "HCABLOPOR")
-    private int razonBloqueo;
+    //@Column(name = "HCABLOPOR")
+    //private int razonBloqueo;
+
+    @OneToOne(mappedBy = "cama", fetch = FetchType.LAZY)
+    private Ingreso ingreso;
 
     public Cama(){
         
     }
 
-    public Cama(String  codigo, String nombre, int grupo, int subgrupo, int tipo, int estadoCama) {
+    public Cama(Integer id, String  codigo, String nombre, int grupo, int subgrupo, int tipo, int estadoCama) {
+        this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.grupo = grupo;
