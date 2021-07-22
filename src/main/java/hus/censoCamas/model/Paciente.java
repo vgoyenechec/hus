@@ -28,7 +28,7 @@ public class Paciente implements Serializable {
     @Column(name = "GPAFECNAC")
     private LocalDateTime fechaNacimiento;
     @Column(name = "GPASEXPAC")
-    private String sexo;
+    private int sexo;
 
     @OneToMany(mappedBy="paciente",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Ingreso> ingresos;
@@ -37,7 +37,7 @@ public class Paciente implements Serializable {
     public Paciente() {
     }
 
-    public Paciente(Integer id, String documento, int tipoDocumento, String lugarExpedicion, String prinom, String segnom, String priape, String segape, LocalDateTime fechaNacimiento, String sexo) {
+    public Paciente(Integer id, String documento, int tipoDocumento, String lugarExpedicion, String prinom, String segnom, String priape, String segape, LocalDateTime fechaNacimiento, int sexo) {
         this.id = id;
         this.documento = documento;
         this.tipoDocumento = tipoDocumento;
@@ -120,11 +120,11 @@ public class Paciente implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getSexo() {
+    public int getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(int sexo) {
         this.sexo = sexo;
     }
 

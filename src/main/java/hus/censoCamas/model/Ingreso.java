@@ -21,7 +21,7 @@ public class Ingreso {
     private Paciente paciente;
 
     @OneToOne
-    @JoinColumn(name = "HPNDEFCAM", referencedColumnName = "HCACODIGO")
+    @JoinColumn(name = "HPNDEFCAM", referencedColumnName = "OID")
     private Cama cama;
 
     @Column(name = "AINFECING")
@@ -83,7 +83,7 @@ public class Ingreso {
         return "Ingreso{" +
                 "idIngreso=" + id +
                 ", idPaciente=" + paciente +
-                ", idCama=" + cama +
+                ", idCama=" + cama.getCodigoCama() +
                 ", fechaIngreso=" + fechaIngreso +
                 '}';
     }
