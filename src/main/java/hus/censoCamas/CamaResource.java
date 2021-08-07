@@ -23,19 +23,19 @@ public class CamaResource {
         return new ResponseEntity<>(camas, HttpStatus.OK);
     }
 
-    @GetMapping("/find/grupo?={def}")
+    @GetMapping("/find/grupo={def}")
     public ResponseEntity<List<Cama>> getCamaByGrupo(@PathVariable("def") int grupo){
         List<Cama> camas = camaService.findCamaByGrupo(grupo);
         return new ResponseEntity<>(camas, HttpStatus.OK);
     }
 
-    @GetMapping("/find/grupo?={def}/subgrupo?={sub}")
+    @GetMapping("/find/grupo={def}/subgrupo={sub}")
     public ResponseEntity<List<Cama>> getCamaByGrupoAndSub(@PathVariable("def") int grupo,@PathVariable("sub") int sub){
         List<Cama> camas = camaService.findCamaByGrupoSub(grupo, sub);
         return new ResponseEntity<>(camas, HttpStatus.OK);
     }
 
-    @GetMapping("/find/grupo?={def}/subgrupo?={sub}/tipo?={tipo}")
+    @GetMapping("/find/grupo={def}/subgrupo={sub}/tipo={tipo}")
     public ResponseEntity<List<Cama>> getCamaByGrupoAndSubAndTipo(@PathVariable("def") int grupo,@PathVariable("sub") int sub, @PathVariable("tipo") int tipo){
         List<Cama> camas = camaService.findCamaByGrupoSubTipo(grupo, sub, tipo);
         return new ResponseEntity<>(camas, HttpStatus.OK);
@@ -59,8 +59,8 @@ public class CamaResource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/find/codigo=?{codigo}")
-    public ResponseEntity<Cama> findByCodigo(@PathVariable("codigo") int codigo){
+    @GetMapping("/find/codigo={codigo}")
+    public ResponseEntity<Cama> findByCodigo(@PathVariable("codigo") String codigo){
         Cama cama = camaService.findByCodigoCama(codigo);
         return new ResponseEntity<>(cama, HttpStatus.OK);
     }

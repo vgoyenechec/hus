@@ -3,7 +3,8 @@ package hus.censoCamas.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "HPNDEFCAM")
+@Entity
+@Table(name = "HPNDEFCAM")
 public class Cama implements Serializable {
     @Id
     @Column(name = "OID", updatable = false,nullable = false)
@@ -24,6 +25,7 @@ public class Cama implements Serializable {
     //@Column(name = "HCABLOPOR")
     //private int razonBloqueo;
 
+    @Transient
     @OneToOne(mappedBy = "cama", fetch = FetchType.LAZY)
     private Ingreso ingreso;
 

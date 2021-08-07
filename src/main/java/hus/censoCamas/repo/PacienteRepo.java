@@ -13,10 +13,10 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
     void deletePacienteById(Integer id);
 
     @Query(value = "select * \n" +
-            "FROM [DGEmpres81].[dbo].[GENPACIEN]\n" +
-            "where ISNULL(PACPRINOM,'') + ' ' + ISNULL(PACSEGNOM,'') + ' ' + ISNULL(PACPRIAPE,'') + ' ' + ISNULL(PACSEGAPE,'') LIKE '%?1%';\n",
+            "FROM [GENPACIEN]\n" +
+            "where ISNULL(PACPRINOM,'') + ' ' + ISNULL(PACSEGNOM,'') + ' ' + ISNULL(PACPRIAPE,'') + ' ' + ISNULL(PACSEGAPE,'') LIKE %?1% \n",
             nativeQuery = true)
     List<Paciente> findPacienteByNombreContaining(String nombre);
 
-    List<Paciente> findByDocumentoContaining(String documento);
+    List<Paciente> findByDocumentoStartsWith(String documento);
 }

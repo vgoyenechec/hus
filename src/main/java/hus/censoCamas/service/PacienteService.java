@@ -30,7 +30,7 @@ public class PacienteService {
 
     public Paciente findPacienteById(Integer id){
         return pacienteRepo.findPacienteById(id)
-                .orElseThrow(()-> new UserNotFoundException("User by id "+id+" was not found"));
+                .orElseThrow(()-> new UserNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
     }
 
     public void deletePaciente(Integer id){
@@ -42,6 +42,6 @@ public class PacienteService {
     }
 
     public List<Paciente> findPacienteByDocumento(String documento){
-        return pacienteRepo.findByDocumentoContaining(documento);
+        return pacienteRepo.findByDocumentoStartsWith(documento);
     }
 }
