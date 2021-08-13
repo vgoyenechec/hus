@@ -1,19 +1,25 @@
 package hus.censoCamas.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "HPNESTANC")
-public class Estancia {
+public class Estancia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OID")
     private Integer id;
-    @Column(name = "ADNINGRES")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="ADNINGRES", referencedColumnName = "OID",nullable=false)
     private Ingreso ingreso;
-    @Column(name = "HPNDEFCAM")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="HPNDEFCAM", referencedColumnName = "OID",nullable=false)
     private Cama cama;
+
     @Column(name = "HESFECING")
     private LocalDateTime fechaIngresoCama;
     @Column(name = "HESTIPOES")
@@ -22,7 +28,9 @@ public class Estancia {
     private LocalDateTime fechaEgresoCama;
     @Column(name = "HESTRAURG")
     private boolean trasladoUrg;
-    @Column(name = "GENUSUARIO")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="GENUSUARIO", referencedColumnName = "OID",nullable=false)
     private Usuario usuario;
 
     public Estancia(){

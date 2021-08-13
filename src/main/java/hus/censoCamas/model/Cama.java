@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "HPNDEFCAM")
-public class Cama implements Serializable {
+public class Cama implements Serializable{
     @Id
     @Column(name = "OID", updatable = false,nullable = false)
     private Integer id;
@@ -22,12 +22,9 @@ public class Cama implements Serializable {
     private int tipo;
     @Column(name = "HCAESTADO")
     private int estadoCama;
-    //@Column(name = "HCABLOPOR")
-    //private int razonBloqueo;
-
-    @Transient
-    @OneToOne(mappedBy = "cama", fetch = FetchType.LAZY)
-    private Ingreso ingreso;
+    /*@Column(name = "HCABLOPOR")
+    private int razonBloqueo;
+*/
 
     public Cama(){
         

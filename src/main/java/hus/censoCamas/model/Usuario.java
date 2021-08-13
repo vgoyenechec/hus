@@ -1,10 +1,11 @@
 package hus.censoCamas.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity(name = "GENUSUARIO")
-public class Usuario {
+public class Usuario implements Serializable{
     @Id
     @Column(name = "OID",updatable = false,nullable = false)
     private Integer id;

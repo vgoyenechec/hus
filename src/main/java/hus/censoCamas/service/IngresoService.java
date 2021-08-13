@@ -5,6 +5,7 @@ import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.repo.CamaRepo;
 import hus.censoCamas.repo.IngresoRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,7 @@ public class IngresoService {
     private final IngresoRepo ingresoRepo;
     private final CamaRepo camaRepo;
 
-
+    @Autowired
     public IngresoService(IngresoRepo ingresoRepo, CamaRepo camaRepo){
         this.ingresoRepo = ingresoRepo;
         this.camaRepo = camaRepo;
@@ -31,9 +32,9 @@ public class IngresoService {
                 .orElseThrow(()-> new UserNotFoundException("No se ha encontrado el ingreso con número "+id));
     }
 
-    public Ingreso findByIdIngreso(int idIng){
-        return ingresoRepo.findIngresoByIdIngreso(idIng)
-                .orElseThrow(()-> new UserNotFoundException("No se ha encontrado el ingreso con número "+idIng));
+    public Ingreso findByConsecutivo(int consecutivo){
+        return ingresoRepo.findIngresoByConsecutivo(consecutivo)
+                .orElseThrow(()-> new UserNotFoundException("No se ha encontrado el ingreso con número "+consecutivo));
     }
 
    public Ingreso updateIngresoCama(Integer id, String codigo){

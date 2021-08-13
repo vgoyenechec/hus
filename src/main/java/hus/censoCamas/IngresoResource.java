@@ -28,7 +28,7 @@ public class IngresoResource {
 
     @GetMapping("/find/id={id}")
     public ResponseEntity<Ingreso> getIngresoById(@PathVariable("id") int id){
-        Ingreso ingreso = ingresoService.findById(id);
+        Ingreso ingreso = ingresoService.findByConsecutivo(id);
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
     }
 

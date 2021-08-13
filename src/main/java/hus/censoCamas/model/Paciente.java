@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "GENPACIEN")
-public class Paciente implements Serializable {
+public class Paciente implements Serializable{
     @Id
     @Column(name="OID",updatable = false,nullable = false)
     private Integer id;
@@ -29,9 +29,6 @@ public class Paciente implements Serializable {
     private LocalDateTime fechaNacimiento;
     @Column(name = "GPASEXPAC")
     private int sexo;
-
-    @OneToMany(mappedBy="paciente",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Ingreso> ingresos;
 
 
     public Paciente() {

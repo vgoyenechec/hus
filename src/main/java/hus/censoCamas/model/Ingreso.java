@@ -2,46 +2,46 @@
 package hus.censoCamas.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ADNINGRESO")
-public class Ingreso {
+public class Ingreso implements Serializable {
     @Id
     @Column(name = "OID", updatable = false,nullable = false)
     private Integer id;
     @Column(name = "AINCONSEC")
     private int consecutivo;
     @Column(name = "ADNCENATE")
-    private String centroAtencion;
+    private int centroAtencion;
     @Column(name = "AINTIPING")
-    private String tipoIngreso;
+    private int tipoIngreso;
     @Column(name = "AINCAUING")
-    private String causa;
+    private int causa;
     @Column(name = "AINTIPRIE")
-    private String tipoRiesgo;
+    private int tipoRiesgo;
     @Column(name = "AINFECING")
     private LocalDateTime fechaIngreso;
     @Column(name = "AINESTADO")
     private int estado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="GENPACIEN", referencedColumnName = "OID",nullable=false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="GENPACIEN", referencedColumnName = "OID")
     private Paciente paciente;
 
     @OneToOne
     @JoinColumn(name = "HPNDEFCAM", referencedColumnName = "OID")
     private Cama cama;
 
-    @OneToOne(mappedBy="ingreso", fetch = FetchType.LAZY)
-    private Egreso egreso;
+
 
 
     public Ingreso(){
 
     }
 
-    public Ingreso(Integer id, int consecutivo, String centroAtencion, String tipoIngreso, String causa, String tipoRiesgo, Paciente paciente, Cama cama, LocalDateTime fechaIngreso, int estado) {
+    public Ingreso(Integer id, int consecutivo, int centroAtencion, int tipoIngreso, int causa, int tipoRiesgo, Paciente paciente, Cama cama, LocalDateTime fechaIngreso, int estado) {
         this.id = id;
         this.consecutivo = consecutivo;
         this.centroAtencion = centroAtencion;
@@ -98,45 +98,37 @@ public class Ingreso {
         this.estado = estado;
     }
 
-    public String getCentroAtencion() {
+    public int getCentroAtencion() {
         return centroAtencion;
     }
 
-    public void setCentroAtencion(String centroAtencion) {
-        this.centroAtencion = centroAtencion;
-    }
+    public void setCentroAtencion(int centroAtencion) { this.centroAtencion = centroAtencion; }
 
-    public String getTipoIngreso() {
+    public int getTipoIngreso() {
         return tipoIngreso;
     }
 
-    public void setTipoIngreso(String tipoIngreso) {
+    public void setTipoIngreso(int tipoIngreso) {
         this.tipoIngreso = tipoIngreso;
     }
 
-    public String getCausa() {
+    public int getCausa() {
         return causa;
     }
 
-    public void setCausa(String causa) {
+    public void setCausa(int causa) {
         this.causa = causa;
     }
 
-    public String getTipoRiesgo() {
+    public int getTipoRiesgo() {
         return tipoRiesgo;
     }
 
-    public void setTipoRiesgo(String tipoRiesgo) {
+    public void setTipoRiesgo(int tipoRiesgo) {
         this.tipoRiesgo = tipoRiesgo;
     }
 
-    public Egreso getEgreso() {
-        return egreso;
-    }
 
-    public void setEgreso(Egreso egreso) {
-        this.egreso = egreso;
-    }
 
     @Override
     public String toString() {
