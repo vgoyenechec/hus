@@ -18,6 +18,10 @@ public class UsuarioResource {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/home")
+    public String showUser(){
+        return "Funciona";
+    }
     @GetMapping("/all")
     public ResponseEntity<List<Usuario>> getAllUsuarios(){
         List<Usuario> usuarios = usuarioService.findAllUsuarios();

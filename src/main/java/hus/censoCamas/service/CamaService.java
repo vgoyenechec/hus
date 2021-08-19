@@ -47,6 +47,10 @@ public class CamaService {
                 .orElseThrow(()-> new UserNotFoundException("La cama de codigo "+id+"no se encuentra"));
     }
 
+    public List<Cama> findCamaByEstado(int estado){
+        return camaRepo.findByEstado(estado);
+    }
+
     public void deleteCama(Integer id){
         camaRepo.deleteCamaById(id);
     }

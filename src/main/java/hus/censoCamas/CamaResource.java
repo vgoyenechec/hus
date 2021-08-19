@@ -41,6 +41,12 @@ public class CamaResource {
         return new ResponseEntity<>(camas, HttpStatus.OK);
     }
 
+    @GetMapping("/find/estado={estado}")
+    public ResponseEntity<List<Cama>> getCamaByEstado(@PathVariable("estado") int estado){
+        List<Cama> camas = camaService.findCamaByEstado(estado);
+        return new ResponseEntity<>(camas, HttpStatus.OK);
+    }
+    
     @PostMapping("/add")
     public ResponseEntity<Cama> addCama(@RequestBody Cama cama){
         Cama newCama = camaService.addCama(cama);

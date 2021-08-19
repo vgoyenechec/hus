@@ -21,7 +21,7 @@ public class Cama implements Serializable{
     @Column(name = "HPNTIPOCA")
     private int tipo;
     @Column(name = "HCAESTADO")
-    private int estadoCama;
+    private int estado;
     /*@Column(name = "HCABLOPOR")
     private int razonBloqueo;
 */
@@ -30,14 +30,14 @@ public class Cama implements Serializable{
         
     }
 
-    public Cama(Integer id, String  codigo, String nombre, int grupo, int subgrupo, int tipo, int estadoCama) {
+    public Cama(Integer id, String  codigo, String nombre, int grupo, int subgrupo, int tipo, int estado) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.grupo = grupo;
         this.subgrupo = subgrupo;
         this.tipo = tipo;
-        this.estadoCama = estadoCama;
+        this.estado = estado;
     }
 
     public int getIdCama() {
@@ -89,11 +89,11 @@ public class Cama implements Serializable{
     }
 
     public int getEstadoCama() {
-        return estadoCama;
+        return estado;
     }
 
-    public void setEstadoCama(int estadoCama) {
-        this.estadoCama = estadoCama;
+    public void setEstadoCama(int estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class Cama implements Serializable{
                 ", grupo='" + grupo + '\'' +
                 ", subgrupo='" + subgrupo + '\'' +
                 ", tipo='" + tipo + '\'' +
-                ", estadoCama='" + estadoCama + '\'' +
+                ", estado='" + estado + '\'' +
                 '}';
     }
 }
