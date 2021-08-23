@@ -1,6 +1,5 @@
 package hus.censoCamas;
 
-import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Paciente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,9 +26,6 @@ public class CensoCamasApplication implements CommandLineRunner {
 		List<Paciente> pacientes = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Paciente.class));
 		pacientes.forEach(System.out::println);
 
-		String sql2 = "SELECT TOP 3 * FROM HPNDEFCAM";
-		List<Cama> camas = jdbcTemplate.query(sql2, BeanPropertyRowMapper.newInstance(Cama.class));
-		camas.forEach(System.out::println);
 
 	}
 }

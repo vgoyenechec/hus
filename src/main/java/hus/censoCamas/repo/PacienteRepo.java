@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
+
+    @Query(value = "select * \n" +
+            "FROM [GENPACIEN]\n" +
+            "WHERE GPASEXPAC IS NOT NULL",
+            nativeQuery = true)
+    List<Paciente> findAll();
+
     Optional<Paciente> findPacienteById(Integer id);
 
     void deletePacienteById(Integer id);
@@ -19,4 +26,9 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
     List<Paciente> findPacienteByNombreContaining(String nombre);
 
     List<Paciente> findByDocumentoStartsWith(String documento);
+
+    @Query(value = "select TOP (?1) * \n" +
+            "FROM [GENPACIEN]\n",
+            nativeQuery = true)
+            List<Paciente> findAllTop(int top);
 }

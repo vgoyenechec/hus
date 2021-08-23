@@ -28,9 +28,12 @@ public class PacienteService {
         return pacienteRepo.save(paciente);
     }
 
+    public List<Paciente> findTopPacientes(int top){
+        return pacienteRepo.findAllTop(top);
+    }
     public Paciente findPacienteById(Integer id){
-        return pacienteRepo.findPacienteById(id).get();
-                //.orElseThrow(()-> new UserNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
+        return pacienteRepo.findPacienteById(id)
+                .orElseThrow(()-> new UserNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
     }
 
     public void deletePaciente(Integer id){

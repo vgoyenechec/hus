@@ -1,7 +1,6 @@
 package hus.censoCamas;
 
 import hus.censoCamas.model.Usuario;
-import hus.censoCamas.model.Usuario;
 import hus.censoCamas.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

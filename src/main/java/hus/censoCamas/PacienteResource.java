@@ -22,6 +22,12 @@ public class PacienteResource {
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
+    @GetMapping("/top/{tp}")
+    public ResponseEntity<List<Paciente>> getTopPacientes(@PathVariable("tp") int top){
+        List<Paciente> pacientes = pacienteService.findTopPacientes(top);
+        return new ResponseEntity<>(pacientes, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Paciente> getPacienteById(@PathVariable("id") Integer id){
         Paciente paciente = pacienteService.findPacienteById(id);
