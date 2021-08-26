@@ -33,6 +33,12 @@ public class UsuarioResource {
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
+    @GetMapping("/find/username={username}")
+    public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
+        Usuario usuario = usuarioService.findUsuariosByUsername(username);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
         Usuario nuevoUsuario = usuarioService.addUsuario(usuario);

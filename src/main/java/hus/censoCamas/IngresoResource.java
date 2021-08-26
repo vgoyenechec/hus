@@ -32,6 +32,18 @@ public class IngresoResource {
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
     }
 
+    @GetMapping("/find/documento={doc}")
+    public ResponseEntity<List<Object[]>> getIngresoByPacienteDoc(@PathVariable("doc") String doc){
+        List<Object[]>  ingresos = ingresoService.findByPacienteDoc(doc);
+        return new ResponseEntity<>(ingresos, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/nombre={nombre}")
+    public ResponseEntity<List<Object[]>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
+        List<Object[]>  ingresos = ingresoService.findByPacienteNombre(nombre);
+        return new ResponseEntity<>(ingresos, HttpStatus.OK);
+    }
+
 
 
 

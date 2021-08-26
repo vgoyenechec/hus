@@ -13,5 +13,6 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Long> {
 
     void deleteUsuarioById(Long id);
 
-    List<Usuario> findUsuarioByUsuarioContaining(String usuario);
+    Optional<Usuario> findByUsuario(String usuario);
+
 }

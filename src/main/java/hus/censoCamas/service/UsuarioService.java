@@ -40,7 +40,8 @@ public class UsuarioService {
         usuarioRepo.deleteUsuarioById(id);
     }
 
-    public List<Usuario> findUsuariosByUsername(String username){
-        return usuarioRepo.findUsuarioByUsuarioContaining(username);
+    public Usuario findUsuariosByUsername(String username){
+        return usuarioRepo.findByUsuario(username)
+                .orElseThrow(()-> new UserNotFoundException("El usuario "+username+" no se ha encontrado"));
     }
 }

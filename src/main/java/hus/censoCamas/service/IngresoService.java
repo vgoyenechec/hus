@@ -3,6 +3,7 @@ package hus.censoCamas.service;
 import hus.censoCamas.exception.UserNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
+import hus.censoCamas.model.Paciente;
 import hus.censoCamas.repo.CamaRepo;
 import hus.censoCamas.repo.IngresoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class IngresoService {
                 .orElseThrow(()-> new UserNotFoundException("No se ha encontrado el ingreso con número "+id));
     }
 
+    public List<Object[]>  findByPacienteDoc(String doc){
+        return ingresoRepo.findByPacienteDoc(doc)
+                .orElseThrow(()-> new UserNotFoundException("No se ha encontrado ningún ingreso relacionado con el documento "+doc));
+    }
+    public List<Object[]>  findByPacienteNombre(String nombre){
+        return ingresoRepo.findByPacienteNombre(nombre)
+                .orElseThrow(()-> new UserNotFoundException("No se ha encontrado ningún ingreso relacionado con el nombre: "+nombre));
+    }
+
     public Ingreso findByConsecutivo(int consecutivo){
         return ingresoRepo.findIngresoByConsecutivo(consecutivo)
                 .orElseThrow(()-> new UserNotFoundException("No se ha encontrado el ingreso con número "+consecutivo));
@@ -44,8 +54,4 @@ public class IngresoService {
         ingreso.setCama(nuevaCama);
         return ingresoRepo.save(ingreso);
     }
-
-
-
-
 }
