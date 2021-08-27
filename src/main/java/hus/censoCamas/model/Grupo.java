@@ -14,6 +14,9 @@ public class Grupo implements Serializable {
     @Column(name = "HGRNOMBRE")
     private String nombre;
 
+    public Grupo() {
+    }
+
     public Grupo(int id, String codigo, String nombre) {
         this.id = id;
         this.codigo = codigo;

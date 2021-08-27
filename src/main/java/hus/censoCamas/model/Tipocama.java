@@ -4,30 +4,30 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "HPNSUBGRU")
-public class Subgrupo implements Serializable {
+@Table(name = "HPNTIPOCA")
+public class Tipocama implements Serializable {
     @Id
     @Column(name = "OID")
     private Integer id;
-    @Column(name = "HSUCODIGO")
+    @Column(name = "HTICODIGO")
     private String codigo;
-    @Column(name = "HSUNOMBRE")
+    @Column(name = "HTINOMBRE")
     private String nombre;
 
-    public Subgrupo() {
+    public Tipocama() {
     }
 
-    public Subgrupo(int id, String codigo, String nombre) {
+    public Tipocama(Integer id, String codigo, String nombre) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

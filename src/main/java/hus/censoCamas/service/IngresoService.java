@@ -3,7 +3,6 @@ package hus.censoCamas.service;
 import hus.censoCamas.exception.UserNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
-import hus.censoCamas.model.Paciente;
 import hus.censoCamas.repo.CamaRepo;
 import hus.censoCamas.repo.IngresoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
