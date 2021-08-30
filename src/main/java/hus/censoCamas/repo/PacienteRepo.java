@@ -26,6 +26,7 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
     List<Paciente> findPacienteByNombreContaining(String nombre);
 
     List<Paciente> findByDocumentoStartsWith(String documento);
+    Optional<Paciente> findByDocumento(String documento);
 
     @Query(value = "select TOP (?1) * \n" +
             "FROM [GENPACIEN]\n",

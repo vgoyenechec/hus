@@ -1,12 +1,14 @@
 package hus.censoCamas;
 
 import hus.censoCamas.model.Ingreso;
+import hus.censoCamas.model.IngresoPaciente;
 import hus.censoCamas.service.IngresoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/ingreso")
@@ -30,14 +32,15 @@ public class IngresoResource {
     }
 
     @GetMapping("/find/documento={doc}")
-    public ResponseEntity<List<Object[]>> getIngresoByPacienteDoc(@PathVariable("doc") String doc){
-        List<Object[]>  ingresos = ingresoService.findByPacienteDoc(doc);
-        return new ResponseEntity<>(ingresos, HttpStatus.OK);
+    public ResponseEntity<IngresoPaciente> getIngresoByPacienteDoc(@PathVariable("doc") String doc){
+        IngresoPaciente ingreso = ingresoService.findByPacienteDoc(doc);
+        return new ResponseEntity<>(ingreso, HttpStatus.OK);
     }
 
     @GetMapping("/find/nombre={nombre}")
-    public ResponseEntity<List<Object[]>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
-        List<Object[]>  ingresos = ingresoService.findByPacienteNombre(nombre);
+    public ResponseEntity<Set<IngresoPaciente>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
+        Set<IngresoPaciente> ingresos = ingresoService.findByPacienteNombre(nombre);
+
         return new ResponseEntity<>(ingresos, HttpStatus.OK);
     }
 

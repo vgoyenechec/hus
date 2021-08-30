@@ -124,6 +124,10 @@ public class Paciente implements Serializable{
         this.sexo = sexo;
     }
 
+    public String getNombreCompleto(){
+        return prinom+' '+segnom+' '+priape+' '+segape;
+    }
+
     @Override
     public String toString() {
         return "Paciente{" +

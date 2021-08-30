@@ -1,5 +1,6 @@
 package hus.censoCamas;
 
+import hus.censoCamas.model.IngresoPaciente;
 import hus.censoCamas.model.Paciente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +51,5 @@ public class CensoCamasApplication implements CommandLineRunner {
 		String sql = "SELECT TOP 3 *  FROM GENPACIEN";
 		List<Paciente> pacientes = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Paciente.class));
 		pacientes.forEach(System.out::println);
-
-
 	}
 }
