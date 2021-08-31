@@ -249,7 +249,13 @@ public class IngresoService {
         Ingreso ingreso = ingresoRepo.findIngresoById(id)
                 .orElseThrow(()-> new UserNotFoundException("No se encuentra un ingreso con este codigo: "+id));
         Cama nuevaCama = camaRepo.findByCodigo(codigo);
-        ingreso.setCama(nuevaCama);
+
+        if(nuevaCama.getEstadoCama() ==1){
+            ingreso.setCama(nuevaCama);
+        }
+        else{
+            throw new UserNotFoundException("La cama no está disponible");
+        }
         return ingresoRepo.save(ingreso);
     }
 }

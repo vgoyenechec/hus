@@ -5,13 +5,14 @@ import hus.censoCamas.service.GrupoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos")
+@RequestMapping("/grupo")
 public class GrupoResource {
     private final GrupoService grupoService;
 
@@ -26,7 +27,7 @@ public class GrupoResource {
     }
 
     @GetMapping("/find/nombre={nombre}")
-    public ResponseEntity<Grupo> findByNameGrupo(String nombre){
+    public ResponseEntity<Grupo> findByNameGrupo(@PathVariable("nombre") String nombre){
         Grupo grupo = grupoService.findByName(nombre);
         return new ResponseEntity<>(grupo, HttpStatus.OK);
     }

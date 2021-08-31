@@ -15,6 +15,4 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
     List<Cama> findByGrupo(int grupo);
     Cama findByCodigo(String codigo);
     List<Cama> findByEstado(int estado);
-
-
 }

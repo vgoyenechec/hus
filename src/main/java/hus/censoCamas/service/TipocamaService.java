@@ -24,4 +24,7 @@ public class TipocamaService {
     public Tipocama findTipoByNombre(String nombre){
         return tipocamaRepo.findByNombre(nombre);
     }
+    public List<Object[]> findByGrupoSubgrupo(int grupo, int subgrupo){
+        return tipocamaRepo.findByGrupoSubgrupo(grupo, subgrupo);
+    }
 }
