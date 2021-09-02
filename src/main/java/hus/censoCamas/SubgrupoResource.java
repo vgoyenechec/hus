@@ -32,8 +32,8 @@ public class SubgrupoResource {
         return new ResponseEntity<>(subgrupo, HttpStatus.OK);
     }
     @GetMapping("/find/grupo={gr}")
-    public ResponseEntity<List<Object[]>> findByGrupo(@PathVariable("gr") int gr){
-        List<Object[]> subgrupo = subgrupoService.findByGrupo(gr);
+    public ResponseEntity<List<String>> findByGrupo(@PathVariable("gr") String gr){
+        List<String> subgrupo = subgrupoService.findByGrupo(gr);
         return new ResponseEntity<>(subgrupo, HttpStatus.OK);
     }
 

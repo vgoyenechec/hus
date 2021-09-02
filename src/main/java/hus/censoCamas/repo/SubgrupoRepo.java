@@ -11,10 +11,12 @@ public interface SubgrupoRepo extends JpaRepository<Subgrupo, Integer> {
 
     Subgrupo findByNombre(String nombre);
 
-    @Query(value = "select distinct s.hsunombre\n" +
+    @Query(value = "select distinct s.hsunombre as nombreSubgrupo\n" +
             "from HPNDEFCAM as c\n" +
             "join HPNSUBGRU as s\n" +
             "on c.HPNSUBGRU = s.oid\n" +
-            "where c.HPNGRUPOS like ?1 ", nativeQuery = true)
-    List<Object[]> findByGrupo(int grupo);
+            "JOIN HPNGRUPOS as g\n" +
+            "on c.HPNGRUPOS = g.oid\n" +
+            "where g.HGRNOMBRE like ?1 ", nativeQuery = true)
+    List<String> findByGrupo(String grupo);
 }

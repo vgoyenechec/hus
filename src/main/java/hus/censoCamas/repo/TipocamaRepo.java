@@ -10,12 +10,17 @@ public interface TipocamaRepo extends JpaRepository<Tipocama, Integer> {
     List<Tipocama> findAll();
     Tipocama findByNombre(String nombre);
 
-    @Query(value = "select distinct s.HTINOMBRE\n" +
+    @Query(value = "select distinct t.HTINOMBRE\n" +
             "from HPNDEFCAM as c\n" +
-            "join HPNTIPOCA as s\n" +
-            "on c.HPNTIPOCA = s.oid \n" +
-            "where c.HPNGRUPOS like ?1\n" +
-            "and c.HPNSUBGRU like ?2", nativeQuery = true)
-    List<Object[]> findByGrupoSubgrupo(int grupo, int subgrupo);
+            "join HPNTIPOCA as t\n" +
+            "on c.HPNTIPOCA = t.oid \n" +
+            "join HPNSUBGRU as s\n" +
+            "on c.HPNSUBGRU = s.oid\n" +
+            "JOIN HPNGRUPOS as g\n" +
+            "on c.HPNGRUPOS = g.oid\n" +
+            "where g.HGRNOMBRE like ?1\n" +
+            "and s.hsunombre like ?2\n", nativeQuery = true)
+    List<String> findByGrupoSubgrupo(String grupo, String subgrupo);
+
 
 }

@@ -30,16 +30,15 @@ public class CamaService {
         return camaRepo.save(cama);
     }
 
-
-    public List<Cama> findCamaByGrupoSubTipo(int grupo, int subgrupo, int tipo){
+    public List<Cama> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
         return camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
     }
 
-    public List<Cama> findCamaByGrupoSub(int grupo, int subgrupo){
+    public List<Cama> findCamaByGrupoSub(String grupo, String subgrupo){
         return camaRepo.findByGrupoAndSubgrupo(grupo, subgrupo);
     }
 
-    public List<Cama> findCamaByGrupo(int grupo){
+    public List<Cama> findCamaByGrupo(String grupo){
         return camaRepo.findByGrupo(grupo);
     }
 

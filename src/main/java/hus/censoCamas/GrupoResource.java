@@ -21,8 +21,8 @@ public class GrupoResource {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Grupo>> findAllGrupos(){
-        List<Grupo> grupos = grupoService.findAllGrupos();
+    public ResponseEntity<List<String>> findAllGrupos(){
+        List<String> grupos = grupoService.findAllNombres();
         return new ResponseEntity<>(grupos, HttpStatus.OK);
     }
 

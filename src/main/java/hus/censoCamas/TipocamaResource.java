@@ -34,8 +34,8 @@ public class TipocamaResource {
     }
 
     @GetMapping("/find/grupo={g}&subgrupo={s}")
-    public ResponseEntity<List<Object[]>> findByGrupoSubgrupo(@PathVariable("g") int g, @PathVariable("s") int s){
-        List<Object[]> tipocama = tipocamaService.findByGrupoSubgrupo(g,s);
+    public ResponseEntity<List<String>> findByGrupoSubgrupo(@PathVariable("g") String g, @PathVariable("s") String s){
+        List<String> tipocama = tipocamaService.findByGrupoSubgrupo(g,s);
         return new ResponseEntity<>(tipocama, HttpStatus.OK);
     }
 }

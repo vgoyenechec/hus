@@ -26,6 +26,6 @@ public class SubgrupoService {
         return subgrupoRepo.findByNombre(nombre);
     }
 
-    public List<Object[]> findByGrupo(int grupo){ return subgrupoRepo.findByGrupo(grupo);}
+    public List<String> findByGrupo(String grupo){ return subgrupoRepo.findByGrupo(grupo);}
 
 }
