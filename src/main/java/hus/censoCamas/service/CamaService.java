@@ -2,10 +2,12 @@ package hus.censoCamas.service;
 
 import hus.censoCamas.exception.UserNotFoundException;
 import hus.censoCamas.model.Cama;
+import hus.censoCamas.model.CamaDTO;
 import hus.censoCamas.repo.CamaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,16 +32,80 @@ public class CamaService {
         return camaRepo.save(cama);
     }
 
-    public List<Cama> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
-        return camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
+    public List<CamaDTO> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
+        List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
+        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
+        camas.forEach(cama -> {
+            CamaDTO dto = new CamaDTO();
+            dto.setOid(cama.getIdCama());
+            dto.setCodigo(cama.getCodigoCama());
+            dto.setNombre(cama.getNombreCama());
+            dto.setGrupo(cama.getGrupo());
+            dto.setSubgrupo(cama.getSubgrupo());
+            dto.setTipocama(cama.getTipoCama());
+            switch (cama.getEstadoCama()){
+                case 1:
+                    dto.setEstado("Desocupada");
+                case 2:
+                    dto.setEstado("Ocupada");
+                case 3:
+                    dto.setEstado("Bloqueada");
+            }
+
+            camasDTO.add(dto);
+        });
+        return camasDTO;
     }
 
-    public List<Cama> findCamaByGrupoSub(String grupo, String subgrupo){
-        return camaRepo.findByGrupoAndSubgrupo(grupo, subgrupo);
+    public List<CamaDTO> findCamaByGrupoSub(String grupo, String subgrupo){
+        List<Cama> camas = camaRepo.findByGrupoAndSubgrupo(grupo, subgrupo);
+        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
+        camas.forEach(cama -> {
+            CamaDTO dto = new CamaDTO();
+            dto.setOid(cama.getIdCama());
+            dto.setCodigo(cama.getCodigoCama());
+            dto.setNombre(cama.getNombreCama());
+            dto.setGrupo(cama.getGrupo());
+            dto.setSubgrupo(cama.getSubgrupo());
+            dto.setTipocama(cama.getTipoCama());
+            switch (cama.getEstadoCama()){
+                case 1:
+                    dto.setEstado("Desocupada");
+                case 2:
+                    dto.setEstado("Ocupada");
+                case 3:
+                    dto.setEstado("Bloqueada");
+            }
+
+            camasDTO.add(dto);
+        });
+        return camasDTO;
     }
 
-    public List<Cama> findCamaByGrupo(String grupo){
-        return camaRepo.findByGrupo(grupo);
+    public List<CamaDTO> findCamaByGrupo(String grupo){
+        List<Cama> camas = camaRepo.findByGrupo(grupo);
+        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
+        camas.forEach(cama -> {
+            CamaDTO dto = new CamaDTO();
+            dto.setOid(cama.getIdCama());
+            dto.setCodigo(cama.getCodigoCama());
+            dto.setNombre(cama.getNombreCama());
+            dto.setGrupo(cama.getGrupo());
+            dto.setSubgrupo(cama.getSubgrupo());
+            dto.setTipocama(cama.getTipoCama());
+            switch (cama.getEstadoCama()){
+                case 1:
+                    dto.setEstado("Desocupada");
+                case 2:
+                    dto.setEstado("Ocupada");
+                case 3:
+                    dto.setEstado("Bloqueada");
+            }
+
+            camasDTO.add(dto);
+        });
+        return camasDTO;
+
     }
 
     public Cama findCamaById(Integer id){

@@ -144,10 +144,9 @@ public class IngresoService {
             List<Ingreso> ingresosP = ingresoRepo.findByPacienteOrderByFechaIngresoDesc(pac)
                     .orElseThrow(()->new UserNotFoundException("no encontró"));
             Ingreso i = ingresosP.get(0);
-            //ingresosP.forEach(i -> {
                 IngresoPaciente nuevo = new IngresoPaciente();
                 nuevo.setDocumento(pac.getDocumento());
-                nuevo.setPaciente(pac.getNombreCompleto().toUpperCase(Locale.ROOT));
+                nuevo.setPaciente(pac.getNombreCompleto().toUpperCase(Locale.ROOT).trim().replaceAll(" +", " "));
                 nuevo.setConsecutivo(i.getConsecutivo());
                 nuevo.setFechaIngreso(i.getFechaIngreso().toLocalDate());
                 switch(i.getTipoRiesgo()){

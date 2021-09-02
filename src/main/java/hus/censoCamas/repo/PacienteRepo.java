@@ -21,7 +21,7 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
 
     @Query(value = "select * \n" +
             "FROM [GENPACIEN]\n" +
-            "where ISNULL(PACPRINOM,'') + ' ' + ISNULL(PACSEGNOM,'') + ' ' + ISNULL(PACPRIAPE,'') + ' ' + ISNULL(PACSEGAPE,'') LIKE %?1% \n",
+            "where ISNULL(PACPRINOM,'') + '' + ISNULL(PACSEGNOM,'') + '' + ISNULL(PACPRIAPE,'') + '' + ISNULL(PACSEGAPE,'') LIKE %?1% \n",
             nativeQuery = true)
     List<Paciente> findPacienteByNombreContaining(String nombre);
 
