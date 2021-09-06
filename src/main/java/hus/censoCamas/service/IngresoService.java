@@ -33,87 +33,129 @@ public class IngresoService {
         nuevo.setPaciente(pac.getNombreCompleto().toUpperCase(Locale.ROOT));
         nuevo.setConsecutivo(i.getConsecutivo());
         nuevo.setFechaIngreso(i.getFechaIngreso().toLocalDate());
+        System.out.println("causa: "+i.getCausa());
+        System.out.println("tipoI: "+i.getTipoIngreso());
+        System.out.println("tipoR: "+i.getTipoRiesgo());
+        System.out.println("estado: "+i.getEstado());
+        System.out.println("consec: "+i.getConsecutivo());
         switch(i.getTipoRiesgo()){
             case 0:
                 nuevo.setTipoRiesgo("Ninguna");
+                break;
             case 1:
                 nuevo.setTipoRiesgo("Accidente_De_Transito");
+                break;
             case 2:
                 nuevo.setTipoRiesgo("Catastrofe");
+                break;
             case 3:
                 nuevo.setTipoRiesgo("Enfermedad_General_Y_Maternidad");
+                break;
             case 4:
                 nuevo.setTipoRiesgo("Accidente_De_Trabajo");
+                break;
             case 5:
                 nuevo.setTipoRiesgo("Enfermedad_Profesional");
+                break;
             case 6:
                 nuevo.setTipoRiesgo("Atención_Inicial_De_Urgencias");
+                break;
             case 7:
                 nuevo.setTipoRiesgo("Otro_Tipo_De_Accidente");
+                break;
             case 8:
                 nuevo.setTipoRiesgo("Lesión_Por_Agresión");
+                break;
             case 9:
                 nuevo.setTipoRiesgo("Lesión_Autoinfligida");
+                break;
             case 10:
                 nuevo.setTipoRiesgo("Maltrato_Físico");
+                break;
             case 11:
                 nuevo.setTipoRiesgo("Promoción_Y_Prevención");
+                break;
             case 12:
                 nuevo.setTipoRiesgo("Otro");
+                break;
             case 13:
                 nuevo.setTipoRiesgo("Accidente_Rábico");
+                break;
             case 14:
                 nuevo.setTipoRiesgo("Accidente_Ofídico");
+                break;
             case 15:
                 nuevo.setTipoRiesgo("Sospecha_De_Abuso_Sexual");
+                break;
             case 16:
                 nuevo.setTipoRiesgo("Sospecha_De_Violencia_Sexual");
+                break;
             case 17:
                 nuevo.setTipoRiesgo("Sospecha_De_Maltrato_Emocional");
+                break;
         }
         switch (i.getCausa()){
             case 0:
                 nuevo.setCausaIngreso("Ninguna");
+                break;
             case 1:
                 nuevo.setCausaIngreso("Enfermedad_Profesional");
+                break;
             case 2:
                 nuevo.setCausaIngreso("Heridos_En_Combate");
+                break;
             case 3:
                 nuevo.setCausaIngreso("Enfermedad_General_Adulto");
+                break;
             case 4:
                 nuevo.setCausaIngreso("Enfermedad_General_Pediatria");
+                break;
             case 5:
                 nuevo.setCausaIngreso("Odontología");
+                break;
             case 6:
                 nuevo.setCausaIngreso("Accidente_De_Transito");
+                break;
             case 7:
                 nuevo.setCausaIngreso("Catastrofe_Fisalud");
+                break;
             case 8:
                 nuevo.setCausaIngreso("Quemados");
+                break;
             case 9:
                 nuevo.setCausaIngreso("Maternidad");
+                break;
             case 10:
                 nuevo.setCausaIngreso("Accidente_Laboral");
+                break;
             case 11:
                 nuevo.setCausaIngreso("Cirugia_Programada");
+                break;
         }
         switch (i.getTipoIngreso()){
             case 1:
                 nuevo.setTipoIngreso("Ambulatorio");
+                break;
             case 2:
                 nuevo.setTipoIngreso("Hospitalario");
+                break;
         }
         switch (i.getEstado()){
-            case 0:
+            case (0):
                 nuevo.setEstado("Registrado");
-            case 1:
+                break;
+            case (1):
                 nuevo.setEstado("Facturado");
-            case 2:
+                break;
+            case (2):
                 nuevo.setEstado("Anulado");
-            case 3:
+                break;
+            case (3):
                 nuevo.setEstado("Bloqueado");
-            case 4:
+                break;
+            case (4):
                 nuevo.setEstado("Cerrado");
+                break;
         }
         return nuevo;
     }
