@@ -21,11 +21,21 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
 
     @Query(value = "select * \n" +
             "FROM [GENPACIEN]\n" +
-            "where ISNULL(PACPRINOM,'') + '' + ISNULL(PACSEGNOM,'') + '' + ISNULL(PACPRIAPE,'') + '' + ISNULL(PACSEGAPE,'') LIKE %?1% \n",
+            "where replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ') LIKE %?1% \n",
             nativeQuery = true)
     List<Paciente> findPacienteByNombreContaining(String nombre);
 
+    @Query(value = "select distinct  p.*\n" +
+            "FROM GENPACIEN as p\n" +
+            "Join ADNINGRESO as i\n" +
+            "on i.genpacien = p.oid\n" +
+            "where replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ') LIKE %?1% \n" +
+            "and i.ainestado like '0'",
+            nativeQuery = true)
+    List<Paciente> findPacienteByNombreContainingIngreso(String nombre);
+
     List<Paciente> findByDocumentoStartsWith(String documento);
+
     Optional<Paciente> findByDocumento(String documento);
 
     @Query(value = "select TOP (?1) * \n" +

@@ -26,8 +26,8 @@ public class IngresoResource {
     }
 
     @GetMapping("/find/id={id}")
-    public ResponseEntity<Ingreso> getIngresoById(@PathVariable("id") int id){
-        Ingreso ingreso = ingresoService.findByConsecutivo(id);
+    public ResponseEntity<IngresoPaciente> getIngresoById(@PathVariable("id") int id){
+        IngresoPaciente ingreso = ingresoService.findByConsecutivo(id);
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
     }
 
@@ -38,8 +38,8 @@ public class IngresoResource {
     }
 
     @GetMapping("/find/nombre={nombre}")
-    public ResponseEntity<Set<IngresoPaciente>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
-        Set<IngresoPaciente> ingresos = ingresoService.findByPacienteNombre(nombre);
+    public ResponseEntity<List<IngresoPaciente>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
+        List<IngresoPaciente> ingresos = ingresoService.findByPacienteNombre(nombre);
 
         return new ResponseEntity<>(ingresos, HttpStatus.OK);
     }
