@@ -30,7 +30,7 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
             "Join ADNINGRESO as i\n" +
             "on i.genpacien = p.oid\n" +
             "where replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ') LIKE %?1% \n" +
-            "and i.ainestado like '0'",
+            "and (i.AINESTADO like '0' or i.AINESTADO like '3') ",
             nativeQuery = true)
     List<Paciente> findPacienteByNombreContainingIngreso(String nombre);
 

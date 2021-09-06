@@ -14,7 +14,6 @@ public interface IngresoRepo extends JpaRepository<Ingreso, Integer> {
 
     @Query(value = "Select top(1) * from ADNINGRESO \n" +
             "where GENPACIEN LIKE ?1 \n" +
-            "and AINESTADO like '0'\n" +
             "Order by AINFECING desc", nativeQuery = true)
     Optional<Ingreso> findByPacienteOrderByFechaIngresoDesc(int paciente);
 
