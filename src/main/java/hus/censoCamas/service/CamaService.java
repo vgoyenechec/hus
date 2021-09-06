@@ -20,6 +20,24 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
+    public CamaDTO mapCama(Cama cama, CamaDTO dto){
+        dto.setOid(cama.getIdCama());
+        dto.setCodigo(cama.getCodigoCama());
+        dto.setNombre(cama.getNombreCama());
+        dto.setGrupo(camaRepo.findGrupo(cama.getGrupo()));
+        dto.setSubgrupo(camaRepo.findSubgrupo(cama.getSubgrupo()));
+        dto.setTipocama(camaRepo.findTipo(cama.getTipoCama()));
+        switch (cama.getEstadoCama()){
+            case 1:
+                dto.setEstado("Desocupada");
+            case 2:
+                dto.setEstado("Ocupada");
+            case 3:
+                dto.setEstado("Bloqueada");
+        }
+        return dto;
+    }
+
     public Cama addCama(Cama cama){
         return camaRepo.save(cama);
     }
@@ -36,23 +54,7 @@ public class CamaService {
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
         List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
         camas.forEach(cama -> {
-            CamaDTO dto = new CamaDTO();
-            dto.setOid(cama.getIdCama());
-            dto.setCodigo(cama.getCodigoCama());
-            dto.setNombre(cama.getNombreCama());
-            dto.setGrupo(cama.getGrupo());
-            dto.setSubgrupo(cama.getSubgrupo());
-            dto.setTipocama(cama.getTipoCama());
-            switch (cama.getEstadoCama()){
-                case 1:
-                    dto.setEstado("Desocupada");
-                case 2:
-                    dto.setEstado("Ocupada");
-                case 3:
-                    dto.setEstado("Bloqueada");
-            }
-
-            camasDTO.add(dto);
+            camasDTO.add(mapCama(cama, new CamaDTO()));
         });
         return camasDTO;
     }
@@ -61,23 +63,7 @@ public class CamaService {
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupo(grupo, subgrupo);
         List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
         camas.forEach(cama -> {
-            CamaDTO dto = new CamaDTO();
-            dto.setOid(cama.getIdCama());
-            dto.setCodigo(cama.getCodigoCama());
-            dto.setNombre(cama.getNombreCama());
-            dto.setGrupo(cama.getGrupo());
-            dto.setSubgrupo(cama.getSubgrupo());
-            dto.setTipocama(cama.getTipoCama());
-            switch (cama.getEstadoCama()){
-                case 1:
-                    dto.setEstado("Desocupada");
-                case 2:
-                    dto.setEstado("Ocupada");
-                case 3:
-                    dto.setEstado("Bloqueada");
-            }
-
-            camasDTO.add(dto);
+            camasDTO.add(mapCama(cama, new CamaDTO()));
         });
         return camasDTO;
     }
@@ -86,23 +72,7 @@ public class CamaService {
         List<Cama> camas = camaRepo.findByGrupo(grupo);
         List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
         camas.forEach(cama -> {
-            CamaDTO dto = new CamaDTO();
-            dto.setOid(cama.getIdCama());
-            dto.setCodigo(cama.getCodigoCama());
-            dto.setNombre(cama.getNombreCama());
-            dto.setGrupo(cama.getGrupo());
-            dto.setSubgrupo(cama.getSubgrupo());
-            dto.setTipocama(cama.getTipoCama());
-            switch (cama.getEstadoCama()){
-                case 1:
-                    dto.setEstado("Desocupada");
-                case 2:
-                    dto.setEstado("Ocupada");
-                case 3:
-                    dto.setEstado("Bloqueada");
-            }
-
-            camasDTO.add(dto);
+            camasDTO.add(mapCama(cama, new CamaDTO()));
         });
         return camasDTO;
 

@@ -33,11 +33,6 @@ public class IngresoService {
         nuevo.setPaciente(pac.getNombreCompleto().toUpperCase(Locale.ROOT));
         nuevo.setConsecutivo(i.getConsecutivo());
         nuevo.setFechaIngreso(i.getFechaIngreso().toLocalDate());
-        System.out.println("causa: "+i.getCausa());
-        System.out.println("tipoI: "+i.getTipoIngreso());
-        System.out.println("tipoR: "+i.getTipoRiesgo());
-        System.out.println("estado: "+i.getEstado());
-        System.out.println("consec: "+i.getConsecutivo());
         switch(i.getTipoRiesgo()){
             case 0:
                 nuevo.setTipoRiesgo("Ninguna");
@@ -182,7 +177,6 @@ public class IngresoService {
         List<Paciente> pacientes = pacienteRepo.findPacienteByNombreContainingIngreso(nombre);
         List<IngresoPaciente> ingresos = new ArrayList<>();
         pacientes.forEach(pac ->{
-            System.out.println(pac.getId());
             Ingreso ingreso = ingresoRepo.findByPacienteOrderByFechaIngresoDesc(pac.getId())
                     .orElseThrow(() -> new UserNotFoundException("no encontró"));
             ingresos.add(mapIngreso(pac, ingreso, new IngresoPaciente()));

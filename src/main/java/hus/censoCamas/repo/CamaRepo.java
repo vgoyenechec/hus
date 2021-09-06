@@ -20,7 +20,7 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "JOIN HPNGRUPOS as g                \n"+
             "on c.HPNGRUPOS = g.oid             \n"+
             "where g.HGRNOMBRE like ?1       \n"+
-            "and s.hsunombre like ?2 " +
+            "and s.hsunombre like ?2 \n" +
             "and t.HTINOMBRE like ?3 ",nativeQuery = true)
     List<Cama> findByGrupoAndSubgrupoAndTipo(String grupo, String subgrupo, String tipo);
 
@@ -43,4 +43,18 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
 
     Cama findByCodigo(String codigo);
     List<Cama> findByEstado(int estado);
+
+    @Query(value = "Select HGRNOMBRE from HPNGRUPOS \n" +
+            "where oid like ?1 ", nativeQuery = true)
+    String findGrupo(int grupo);
+
+    @Query(value = "select hsunombre \n" +
+            "from HPNSUBGRU \n" +
+            "where oid like ?1 ", nativeQuery = true)
+    String findSubgrupo(int subgrupo);
+
+    @Query(value = "select HTINOMBRE\n" +
+            "from HPNTIPOCA \n" +
+            "where oid like ?1 ", nativeQuery = true)
+    String findTipo(int tipo);
 }
