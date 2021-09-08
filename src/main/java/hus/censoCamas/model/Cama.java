@@ -22,9 +22,6 @@ public class Cama implements Serializable{
     private int tipo;
     @Column(name = "HCAESTADO")
     private int estado;
-    /*@Column(name = "HCABLOPOR")
-    private int razonBloqueo;
-*/
 
     public Cama(){
         

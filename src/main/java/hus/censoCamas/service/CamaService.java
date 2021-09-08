@@ -27,13 +27,17 @@ public class CamaService {
         dto.setGrupo(camaRepo.findGrupo(cama.getGrupo()));
         dto.setSubgrupo(camaRepo.findSubgrupo(cama.getSubgrupo()));
         dto.setTipocama(camaRepo.findTipo(cama.getTipoCama()));
+        dto.setPaciente(camaRepo.findPaciente(cama.getIdCama()));
         switch (cama.getEstadoCama()){
             case 1:
                 dto.setEstado("Desocupada");
+                break;
             case 2:
                 dto.setEstado("Ocupada");
+                break;
             case 3:
                 dto.setEstado("Bloqueada");
+                break;
         }
         return dto;
     }
