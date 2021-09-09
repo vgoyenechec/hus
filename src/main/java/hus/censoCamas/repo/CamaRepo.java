@@ -59,7 +59,7 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "where oid like ?1 ", nativeQuery = true)
     String findTipo(int tipo);
 
-    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' '), g.pacnumdoc, g.AINCONSEC\n" +
+    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' '), g.pacnumdoc, i.AINCONSEC\n" +
             "from GENPACIEN as g\n" +
             "join ADNINGRESO as i\n" +
             "on g.oid = i.GENPACIEN\n" +
