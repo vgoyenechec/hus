@@ -44,6 +44,7 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
     Cama findByCodigo(String codigo);
     List<Cama> findByEstado(int estado);
 
+
     @Query(value = "Select HGRNOMBRE from HPNGRUPOS \n" +
             "where oid like ?1 ", nativeQuery = true)
     String findGrupo(int grupo);
@@ -58,11 +59,12 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "where oid like ?1 ", nativeQuery = true)
     String findTipo(int tipo);
 
-    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ')\n" +
+    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' '), g.pacnumdoc, g.AINCONSEC\n" +
             "from GENPACIEN as g\n" +
             "join ADNINGRESO as i\n" +
             "on g.oid = i.GENPACIEN\n" +
-            "where i.HPNDEFCAM like ?1\n"+
+            "where i.HPNDEFCAM like ?1\n" +
+            "and i.AINESTADO like '0'\n"+
             "order by i.AINFECING desc ", nativeQuery = true)
     String findPaciente(int cama);
 }

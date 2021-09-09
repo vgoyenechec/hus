@@ -44,7 +44,7 @@ public class IngresoResource {
         return new ResponseEntity<>(ingresos, HttpStatus.OK);
     }
 
-    @PostMapping("update/ingreso={ing}&cama={cama}")
+    @PutMapping("update/ingreso={ing}&cama={cama}")
     public ResponseEntity<Ingreso> updateCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
         Ingreso ingreso = ingresoService.updateIngresoCama(ing, cama);
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
