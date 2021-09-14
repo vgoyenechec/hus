@@ -99,4 +99,14 @@ public class IngresoService {
         else{ throw new UserNotFoundException("La cama no está disponible"); }
         return ingresoRepo.save(ingreso);
     }
+
+
+    public Cama liberarCamaIngreso(int id){
+        Ingreso ing = ingresoRepo.findIngresoById(id)
+                .orElseThrow(()-> new UserNotFoundException("no hay ingreso con ese id"+id));
+        Cama cama = ing.getCama();
+        cama.setEstadoCama(1);
+        camaRepo.save(cama);
+        return cama;
+    }
 }

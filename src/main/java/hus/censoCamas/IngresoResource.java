@@ -1,5 +1,6 @@
 package hus.censoCamas;
 
+import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.model.IngresoPaciente;
 import hus.censoCamas.service.IngresoService;
@@ -48,6 +49,12 @@ public class IngresoResource {
     public ResponseEntity<Ingreso> updateCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
         Ingreso ingreso = ingresoService.updateIngresoCama(ing, cama);
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
+
+    }
+    @PutMapping("update/ingreso={ing}")
+    public ResponseEntity<Cama> liberarCamaEnIngreso(@PathVariable("ing") int ing){
+        Cama cama = ingresoService.liberarCamaIngreso(ing);
+        return new ResponseEntity<>(cama, HttpStatus.OK);
 
     }
 
