@@ -83,30 +83,51 @@ public class IngresoService {
     }
 
    public Ingreso updateIngresoCama(Integer id, String codigo){
-        Ingreso ingreso = ingresoRepo.findIngresoById(id)
-                .orElseThrow(()-> new UserNotFoundException("No se encuentra un ingreso con este codigo: "+id));
-        Cama nuevaCama = camaRepo.findByCodigo(codigo);
-        Cama actual = camaRepo.findById(ingreso.getCama().getIdCama())
-                .orElseThrow(()->new UserNotFoundException("No encuentra cama"));
+        Ingreso ingreso = ingresoRepo.findIngresoByConsecutivo(id)
+                .orElseThrow(()-> new UserNotFoundException("No se encuentra un ingreso con este codigo "+id));
+        Cama nuevaCama = camaRepo.findByCodigo(codigo)
+                .orElseThrow(()-> new UserNotFoundException("no encontro cama con codigo "+codigo));
 
-        if(nuevaCama.getEstadoCama() == 1){
-            ingreso.setCama(nuevaCama);
-            nuevaCama.setEstadoCama(2);
-            actual.setEstadoCama(1);
-            camaRepo.save(actual);
-            camaRepo.save(nuevaCama);
+        try{
+            if(nuevaCama.getEstadoCama() == 1){
+                ingreso.setCama(nuevaCama);
+                nuevaCama.setEstadoCama(2);
+                if(ingreso.getCama()!=null) {
+                    Cama actual = camaRepo.findById(ingreso.getCama().getIdCama())
+                            .orElseThrow(() -> new UserNotFoundException("No encuentra cama"));
+                    actual.setEstadoCama(1);
+                    camaRepo.save(actual);
+                }
+                else{
+                 System.out.println("No tiene cama actual!!");
+                }
+
+                camaRepo.save(nuevaCama);
+                ingresoRepo.save(ingreso);
+            }
+            else{
+                throw new UserNotFoundException("Cama no disponible!!");
+            }
         }
-        else{ throw new UserNotFoundException("La cama no está disponible"); }
-        return ingresoRepo.save(ingreso);
+        catch (Exception e){
+            System.out.println("\n\n\nFalló traslado!\n\n\n");
+        }
+
+        return ingreso;
     }
 
 
     public Cama liberarCamaIngreso(int id){
-        Ingreso ing = ingresoRepo.findIngresoById(id)
+        Ingreso ing = ingresoRepo.findIngresoByConsecutivo(id)
                 .orElseThrow(()-> new UserNotFoundException("no hay ingreso con ese id"+id));
         Cama cama = ing.getCama();
-        cama.setEstadoCama(1);
-        camaRepo.save(cama);
+
+        if(cama.getEstadoCama()!=1){
+            cama.setEstadoCama(1);
+            camaRepo.save(cama);
+        }
+        else{ throw new UserNotFoundException("La cama "+cama.getCodigoCama()+ " ya está disponible"); }
+
         return cama;
     }
 }

@@ -109,6 +109,7 @@ public class CamaService {
     }
 
     public Cama findByCodigoCama(String codigo){
-        return camaRepo.findByCodigo(codigo);
+        return camaRepo.findByCodigo(codigo)
+                .orElseThrow(()-> new UserNotFoundException("no encontro cama con codigo "+ codigo));
     }
 }

@@ -41,7 +41,7 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "where g.HGRNOMBRE like ?1 ",nativeQuery = true)
     List<Cama> findByGrupo(String grupo);
 
-    Cama findByCodigo(String codigo);
+    Optional<Cama> findByCodigo(String codigo);
     List<Cama> findByEstado(int estado);
 
 
