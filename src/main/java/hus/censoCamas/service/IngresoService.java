@@ -82,38 +82,28 @@ public class IngresoService {
         return mapIngreso(pac, ingreso, new IngresoPaciente());
     }
 
-   public Ingreso updateIngresoCama(Integer id, String codigo){
+   public Ingreso updateIngresoCama(int id, String codigo){
         Ingreso ingreso = ingresoRepo.findIngresoByConsecutivo(id)
                 .orElseThrow(()-> new UserNotFoundException("No se encuentra un ingreso con este codigo "+id));
         Cama nuevaCama = camaRepo.findByCodigo(codigo)
                 .orElseThrow(()-> new UserNotFoundException("no encontro cama con codigo "+codigo));
 
-        try{
-            if(nuevaCama.getEstadoCama() == 1){
-                ingreso.setCama(nuevaCama);
-                nuevaCama.setEstadoCama(2);
-                if(ingreso.getCama()!=null) {
+        if(ingreso.getEstado()!=0){
+            throw new UserNotFoundException("El estado del ingreso no es Registrado, no se puede hacer traslado");
+        }
+            if(nuevaCama.getEstadoCama() == 1) {
+                if (ingreso.getCama() != null) {
                     Cama actual = camaRepo.findById(ingreso.getCama().getIdCama())
                             .orElseThrow(() -> new UserNotFoundException("No encuentra cama"));
                     actual.setEstadoCama(1);
                     camaRepo.save(actual);
                 }
-                else{
-                 System.out.println("No tiene cama actual!!");
-                }
-
+                ingreso.setCama(nuevaCama);
+                nuevaCama.setEstadoCama(2);
                 camaRepo.save(nuevaCama);
-                ingresoRepo.save(ingreso);
             }
-            else{
-                throw new UserNotFoundException("Cama no disponible!!");
-            }
-        }
-        catch (Exception e){
-            System.out.println("\n\n\nFalló traslado!\n\n\n");
-        }
-
-        return ingreso;
+            else{ throw new UserNotFoundException("Cama no disponible!!"); }
+        return ingresoRepo.save(ingreso);
     }
 
 
@@ -124,10 +114,11 @@ public class IngresoService {
 
         if(cama.getEstadoCama()!=1){
             cama.setEstadoCama(1);
-            camaRepo.save(cama);
+            ing.setCama(null);
         }
         else{ throw new UserNotFoundException("La cama "+cama.getCodigoCama()+ " ya está disponible"); }
-
+        camaRepo.save(cama);
+        ingresoRepo.save(ing);
         return cama;
     }
 }

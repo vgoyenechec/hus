@@ -36,13 +36,15 @@ public class CamaService {
                 break;
             case 2:
                 try {
-                    dto.setEstado("Ocupada");
                     paciente = camaRepo.findPaciente(cama.getIdCama()).split(",", 3);
+                    dto.setEstado("Ocupada");
                     break;
                 }
                 catch(Exception e){
                     paciente = new String[]{"null", "null", "null"};
+                    System.out.println("\nEl ingreso no tiene estado 'Registrado'.\n");
                     break;
+
             }
             case 3:
                 dto.setEstado("Bloqueada");
