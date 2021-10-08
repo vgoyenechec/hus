@@ -34,12 +34,7 @@ public class Ingreso implements Serializable {
     @JoinColumn(name = "HPNDEFCAM", referencedColumnName = "OID")
     private Cama cama;
 
-
-
-
-    public Ingreso(){
-
-    }
+    public Ingreso(){ }
 
     public Ingreso(Integer id, int consecutivo, int centroAtencion, int tipoIngreso, int causa, int tipoRiesgo, Paciente paciente, Cama cama, LocalDateTime fechaIngreso, int estado) {
         this.id = id;
@@ -128,7 +123,9 @@ public class Ingreso implements Serializable {
         this.tipoRiesgo = tipoRiesgo;
     }
 
-
+    public boolean isIngresoRegistrado(){
+        return estado == 0;
+    }
 
     @Override
     public String toString() {

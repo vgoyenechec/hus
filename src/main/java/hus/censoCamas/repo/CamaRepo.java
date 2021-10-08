@@ -59,7 +59,7 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "where oid like ?1 ", nativeQuery = true)
     String findTipo(int tipo);
 
-    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' '), g.pacnumdoc, i.AINCONSEC\n" +
+    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ') as paciente, g.pacnumdoc as documento, i.AINCONSEC as consecutivo, i.AINFECING as fechaIngreso\n" +
             "from GENPACIEN as g\n" +
             "join ADNINGRESO as i\n" +
             "on g.oid = i.GENPACIEN\n" +
@@ -67,4 +67,12 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
             "and i.AINESTADO like '0'\n"+
             "order by i.AINFECING desc ", nativeQuery = true)
     String findPaciente(int cama);
+
+    @Query(value = "select top (1) replace(ISNULL(PACPRINOM,'')+' '+ISNULL(PACSEGNOM,'')+' '+ISNULL(PACPRIAPE,'')+' '+ISNULL(PACSEGAPE,''), '   ',' ') as paciente, g.pacnumdoc as documento, i.AINCONSEC as consecutivo, i.AINFECING as fechaIngreso\n" +
+            "from GENPACIEN as g\n" +
+            "join ADNINGRESO as i\n" +
+            "on g.oid = i.GENPACIEN\n" +
+            "where i.HPNDEFCAM like ?1\n" +
+            "order by i.AINFECING desc ", nativeQuery = true)
+    String findPacienteFinal(int cama);
 }

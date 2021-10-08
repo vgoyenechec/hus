@@ -20,42 +20,74 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
-    public CamaDTO mapCama(Cama cama, CamaDTO dto){
+    private CamaDTO mapCama(Cama cama, CamaDTO dto){
+        String[] paciente = setPacienteInCama(cama);
+
         dto.setOid(cama.getIdCama());
         dto.setCodigo(cama.getCodigoCama());
         dto.setNombre(cama.getNombreCama());
         dto.setGrupo(camaRepo.findGrupo(cama.getGrupo()));
         dto.setSubgrupo(camaRepo.findSubgrupo(cama.getSubgrupo()));
         dto.setTipocama(camaRepo.findTipo(cama.getTipoCama()));
-        String[] paciente = new String[3];
-
-        switch (cama.getEstadoCama()){
-            case 1:
-                dto.setEstado("Desocupada");
-                paciente = new String[]{"null", "null", "null"};
-                break;
-            case 2:
-                try {
-                    paciente = camaRepo.findPaciente(cama.getIdCama()).split(",", 3);
-                    dto.setEstado("Ocupada");
-                    break;
-                }
-                catch(Exception e){
-                    paciente = new String[]{"null", "null", "null"};
-                    System.out.println("\nEl ingreso no tiene estado 'Registrado'.\n");
-                    break;
-
-            }
-            case 3:
-                dto.setEstado("Bloqueada");
-                paciente = new String[]{"null", "null", "null"};
-                break;
-        }
+        dto.setEstado(setEstadoCamaDTO(cama, paciente[0]));
         dto.setPaciente(paciente[0]);
         dto.setDocumento(paciente[1]);
         dto.setIngreso(paciente[2]);
+        dto.setFechaIngreso(paciente[3]);
         return dto;
     }
+
+    private String setEstadoCamaDTO(Cama cama, String paciente){
+        String estado = "";
+        switch (cama.getEstadoCama()){
+            case 1:
+                estado = "Desocupada";
+                break;
+            case 2:
+                estado = checkEstadoOcupado(cama, paciente);
+                break;
+            case 3:
+                estado = "Bloqueada";
+                break;
+        }
+        return estado;
+    }
+
+    private String checkEstadoOcupado(Cama cama, String paciente){
+        String estado="";
+        if(!paciente.equals("")){
+            estado = "Ocupada";
+        }
+        else{
+            estado = "Desocupada";
+            cama.setEstadoCama(1);
+            camaRepo.save(cama);
+        }
+        return estado;
+    }
+
+    private String[] setPacienteInCama(Cama cama){
+        String[] paciente = setPacienteNull();
+        try {
+            if(cama.getEstadoCama()==2){
+                paciente = camaRepo.findPaciente(cama.getIdCama()).split(",",4);
+            }
+        }
+        catch (Exception e){
+            System.out.println("\n\nUltimo ingreso relacionado con la cama "+cama.getCodigoCama()+" diferente a Registrado!!\n");
+        }
+        return paciente;
+    }
+
+    private String[] setPacienteNull(){
+        return new String[]{"", "", "", ""};
+    }
+
+    /*private boolean checkPacienteFinal(Cama cama){
+        String[] pacienteRegistrado = camaRepo.findPaciente(cama.getIdCama()).split(",", 4);
+        String[] pacienteFinal = camaRepo.findPacienteFinal(cama.getIdCama()).split(",", 4);
+
+    }*/
 
     public Cama addCama(Cama cama){
         return camaRepo.save(cama);
@@ -71,35 +103,24 @@ public class CamaService {
 
     public List<CamaDTO> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
-        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
-        camas.forEach(cama -> {
-            camasDTO.add(mapCama(cama, new CamaDTO()));
-        });
-        return camasDTO;
+        return queryCamas(camas);
     }
 
     public List<CamaDTO> findCamaByGrupoSub(String grupo, String subgrupo){
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupo(grupo, subgrupo);
-        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
-        camas.forEach(cama -> {
-            camasDTO.add(mapCama(cama, new CamaDTO()));
-        });
-        return camasDTO;
+        return queryCamas(camas);
     }
 
     public List<CamaDTO> findCamaByGrupo(String grupo){
         List<Cama> camas = camaRepo.findByGrupo(grupo);
-        List<CamaDTO> camasDTO = new ArrayList<CamaDTO>();
-        camas.forEach(cama -> {
-            camasDTO.add(mapCama(cama, new CamaDTO()));
-        });
-        return camasDTO;
+        return queryCamas(camas);
 
     }
 
-    public Cama findCamaById(Integer id){
-        return camaRepo.findCamaById(id)
-                .orElseThrow(()-> new UserNotFoundException("La cama de codigo "+id+"no se encuentra"));
+    private List<CamaDTO> queryCamas(List<Cama> camas){
+        List<CamaDTO> camasDTO = new ArrayList<>();
+        camas.forEach(cama -> camasDTO.add(mapCama(cama, new CamaDTO())));
+        return camasDTO;
     }
 
     public List<Cama> findCamaByEstado(int estado){

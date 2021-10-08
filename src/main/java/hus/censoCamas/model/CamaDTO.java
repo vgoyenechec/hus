@@ -11,9 +11,11 @@ public class CamaDTO {
     private String paciente;
     private String documento;
     private String ingreso;
+    private String fechaIngreso;
 
     public CamaDTO(){}
-    public CamaDTO(int oid, String codigo, String nombre, String estado, String grupo, String subgrupo, String tipocama, String paciente, String documento, String ingreso) {
+
+    public CamaDTO(int oid, String codigo, String nombre, String estado, String grupo, String subgrupo, String tipocama, String paciente, String documento, String ingreso, String fechaIngreso) {
         this.oid = oid;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -24,6 +26,7 @@ public class CamaDTO {
         this.paciente = paciente;
         this.documento = documento;
         this.ingreso = ingreso;
+        this.fechaIngreso = fechaIngreso;
     }
 
     public int getOid() {
@@ -97,5 +100,13 @@ public class CamaDTO {
     public String getIngreso() { return ingreso; }
 
     public void setIngreso(String ingreso) { this.ingreso = ingreso; }
+
+    public String getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(String fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
 }
 
