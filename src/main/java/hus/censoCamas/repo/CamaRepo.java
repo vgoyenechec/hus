@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CamaRepo extends JpaRepository<Cama, Integer> {
-
     @Query(value = "select distinct c.* \n"+
             "from HPNDEFCAM as c                \n"+
             "JOIN HPNTIPOCA as t                \n"+
@@ -40,6 +39,13 @@ public interface CamaRepo extends JpaRepository<Cama, Integer> {
     List<Cama> findByGrupo(String grupo);
 
     Optional<Cama> findByCodigo(String codigo);
+
+    @Query(value = "select * \n"+
+            "from HPNDEFCAM as c \n"+
+            "where c.HCACODIGO like ?1 \n" +
+            "and c.HCAESTADO like '1' ",nativeQuery = true)
+    Optional<Cama> findByCodigoAndDesocupada(String codigo);
+
     List<Cama> findByEstado(int estado);
 
 

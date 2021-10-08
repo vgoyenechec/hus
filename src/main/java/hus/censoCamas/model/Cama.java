@@ -37,6 +37,18 @@ public class Cama implements Serializable{
         this.estado = estado;
     }
 
+    public boolean isDesocupada(){
+        return getEstadoCama() == 1;
+    }
+
+    public boolean isOcupada(){
+        return getEstadoCama() == 2;
+    }
+
+    public boolean isBloqueada(){
+        return getEstadoCama() == 3;
+    }
+
     public int getIdCama() {
         return id;
     }
@@ -65,9 +77,7 @@ public class Cama implements Serializable{
         return grupo;
     }
 
-    public void setGrupo(int grupo) {
-        this.grupo = grupo;
-    }
+    public void setGrupo(int grupo) { this.grupo = grupo; }
 
     public int getSubgrupo() {
         return subgrupo;

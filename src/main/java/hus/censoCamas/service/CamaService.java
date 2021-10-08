@@ -1,6 +1,6 @@
 package hus.censoCamas.service;
 
-import hus.censoCamas.exception.UserNotFoundException;
+import hus.censoCamas.exception.ObjectNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.CamaDTO;
 import hus.censoCamas.model.PacienteDTO;
@@ -56,7 +56,7 @@ public class CamaService {
 
     private String checkEstadoOcupado(Cama cama, String paciente){
         String estado;
-        if(!paciente.equals("")){
+        if(checkIfPacienteIsRegistrado(paciente)){
             estado = "Ocupada";
         }
         else{
@@ -67,6 +67,9 @@ public class CamaService {
         return estado;
     }
 
+    private boolean checkIfPacienteIsRegistrado(String paciente){
+        return !paciente.equals("");
+    }
     private String[] setPacienteInCama(Cama cama){
         String[] paciente = setPacienteNull();
         try {
@@ -137,6 +140,6 @@ public class CamaService {
 
     public Cama findByCodigoCama(String codigo){
         return camaRepo.findByCodigo(codigo)
-                .orElseThrow(()-> new UserNotFoundException("no encontro cama con codigo "+ codigo));
+                .orElseThrow(()-> new ObjectNotFoundException("no encontro cama con codigo "+ codigo));
     }
 }
