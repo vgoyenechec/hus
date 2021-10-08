@@ -8,9 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
-
 @RestController
 @RequestMapping("/ingreso")
 public class IngresoResource {
@@ -18,12 +15,6 @@ public class IngresoResource {
 
     public IngresoResource(IngresoService ingresoService) {
         this.ingresoService = ingresoService;
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Ingreso>> getAllCamas(){
-        List<Ingreso> ingresos = ingresoService.findAllIngresos();
-        return new ResponseEntity<>(ingresos, HttpStatus.OK);
     }
 
     @GetMapping("/find/id={id}")
@@ -38,16 +29,9 @@ public class IngresoResource {
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
     }
 
-    @GetMapping("/find/nombre={nombre}")
-    public ResponseEntity<List<IngresoPaciente>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
-        List<IngresoPaciente> ingresos = ingresoService.findByPacienteNombre(nombre);
-
-        return new ResponseEntity<>(ingresos, HttpStatus.OK);
-    }
-
     @PutMapping("update/ingreso={ing}/cama={cama}")
-    public ResponseEntity<Ingreso> updateCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
-        Ingreso ingreso = ingresoService.updateIngresoCama(ing, cama);
+    public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
+        Ingreso ingreso = ingresoService.updateIngresoCamaParaTraslado(ing, cama);
         return new ResponseEntity<>(ingreso, HttpStatus.OK);
 
     }

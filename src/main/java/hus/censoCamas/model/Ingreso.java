@@ -49,6 +49,20 @@ public class Ingreso implements Serializable {
         this.estado = estado;
     }
 
+    public boolean isEstadoRegistrado(){
+        return getEstado()==0;
+    }
+
+    public boolean isCamaVinculada(){
+        return getCama() != null;
+    }
+    public String getCodigoCamaVinculada(){
+        return getCama().getCodigoCama();
+    }
+
+    public int getIdPaciente(){
+        return getPaciente().getId();
+    }
     public Integer getId() {
         return id;
     }
@@ -121,10 +135,6 @@ public class Ingreso implements Serializable {
 
     public void setTipoRiesgo(int tipoRiesgo) {
         this.tipoRiesgo = tipoRiesgo;
-    }
-
-    public boolean isIngresoRegistrado(){
-        return estado == 0;
     }
 
     @Override
