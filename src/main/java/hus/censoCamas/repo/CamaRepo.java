@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CamaRepo extends JpaRepository<Cama, Integer> {
-    Optional<Cama> findCamaById(Integer id);
-    void deleteCamaById(Integer id);
 
     @Query(value = "select distinct c.* \n"+
             "from HPNDEFCAM as c                \n"+

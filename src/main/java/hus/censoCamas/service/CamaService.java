@@ -3,6 +3,7 @@ package hus.censoCamas.service;
 import hus.censoCamas.exception.UserNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.CamaDTO;
+import hus.censoCamas.model.PacienteDTO;
 import hus.censoCamas.repo.CamaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class CamaService {
     }
 
     private CamaDTO mapCama(Cama cama, CamaDTO dto){
-        String[] paciente = setPacienteInCama(cama);
+        PacienteDTO paciente = new PacienteDTO(setPacienteInCama(cama));
 
         dto.setOid(cama.getIdCama());
         dto.setCodigo(cama.getCodigoCama());
@@ -29,11 +30,11 @@ public class CamaService {
         dto.setGrupo(camaRepo.findGrupo(cama.getGrupo()));
         dto.setSubgrupo(camaRepo.findSubgrupo(cama.getSubgrupo()));
         dto.setTipocama(camaRepo.findTipo(cama.getTipoCama()));
-        dto.setEstado(setEstadoCamaDTO(cama, paciente[0]));
-        dto.setPaciente(paciente[0]);
-        dto.setDocumento(paciente[1]);
-        dto.setIngreso(paciente[2]);
-        dto.setFechaIngreso(paciente[3]);
+        dto.setEstado(setEstadoCamaDTO(cama, paciente.getPaciente()));
+        dto.setPaciente(paciente.getPaciente());
+        dto.setDocumento(paciente.getDocumento());
+        dto.setIngreso(paciente.getConsecutivo());
+        dto.setFechaIngreso(paciente.getFechaIngreso());
         return dto;
     }
 
@@ -54,7 +55,7 @@ public class CamaService {
     }
 
     private String checkEstadoOcupado(Cama cama, String paciente){
-        String estado="";
+        String estado;
         if(!paciente.equals("")){
             estado = "Ocupada";
         }
@@ -70,11 +71,18 @@ public class CamaService {
         String[] paciente = setPacienteNull();
         try {
             if(cama.getEstadoCama()==2){
-                paciente = camaRepo.findPaciente(cama.getIdCama()).split(",",4);
+               paciente = getPacienteInfo(cama, paciente);
             }
         }
         catch (Exception e){
-            System.out.println("\n\nUltimo ingreso relacionado con la cama "+cama.getCodigoCama()+" diferente a Registrado!!\n");
+            System.out.println("\n\nUltimo ingreso en cama "+cama.getCodigoCama()+" diferente a Registrado!! ");
+        }
+        return paciente;
+    }
+
+    private String[] getPacienteInfo(Cama cama, String[] paciente){
+        if(comparePacienteRegistradoAndFinal(cama)){
+            paciente = camaRepo.findPaciente(cama.getIdCama()).split(",", 4);
         }
         return paciente;
     }
@@ -83,11 +91,11 @@ public class CamaService {
         return new String[]{"", "", "", ""};
     }
 
-    /*private boolean checkPacienteFinal(Cama cama){
+    private boolean comparePacienteRegistradoAndFinal(Cama cama){
         String[] pacienteRegistrado = camaRepo.findPaciente(cama.getIdCama()).split(",", 4);
         String[] pacienteFinal = camaRepo.findPacienteFinal(cama.getIdCama()).split(",", 4);
-
-    }*/
+        return pacienteFinal[2].equals(pacienteRegistrado[2]);
+    }
 
     public Cama addCama(Cama cama){
         return camaRepo.save(cama);
@@ -125,10 +133,6 @@ public class CamaService {
 
     public List<Cama> findCamaByEstado(int estado){
         return camaRepo.findByEstado(estado);
-    }
-
-    public void deleteCama(Integer id){
-        camaRepo.deleteCamaById(id);
     }
 
     public Cama findByCodigoCama(String codigo){

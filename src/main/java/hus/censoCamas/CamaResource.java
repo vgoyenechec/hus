@@ -60,12 +60,6 @@ public class CamaResource {
         return new ResponseEntity<>(updateCama, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Cama> deleteCama(@PathVariable("id") Integer id){
-        camaService.deleteCama(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/find/codigo={codigo}")
     public ResponseEntity<Cama> findByCodigo(@PathVariable("codigo") String codigo){
         Cama cama = camaService.findByCodigoCama(codigo);
