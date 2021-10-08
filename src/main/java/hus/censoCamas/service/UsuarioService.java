@@ -1,6 +1,6 @@
 package hus.censoCamas.service;
 
-import hus.censoCamas.exception.UserNotFoundException;
+import hus.censoCamas.exception.ObjectNotFoundException;
 import hus.censoCamas.model.Usuario;
 import hus.censoCamas.repo.UsuarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class UsuarioService {
 
     public Usuario findUsuarioById(Long id){
         return usuarioRepo.findUsuarioById(id)
-                .orElseThrow(()-> new UserNotFoundException("El usuario con id "+id+" no se ha encontrado"));
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario con id "+id+" no se ha encontrado"));
     }
 
     public void deleteUsuario(Long id) {
@@ -42,6 +42,6 @@ public class UsuarioService {
 
     public Usuario findUsuariosByUsername(String username){
         return usuarioRepo.findByUsuario(username)
-                .orElseThrow(()-> new UserNotFoundException("El usuario "+username+" no se ha encontrado"));
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+username+" no se ha encontrado"));
     }
 }

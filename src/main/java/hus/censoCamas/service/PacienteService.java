@@ -1,5 +1,5 @@
 package hus.censoCamas.service;
-import hus.censoCamas.exception.UserNotFoundException;
+import hus.censoCamas.exception.ObjectNotFoundException;
 import hus.censoCamas.model.Paciente;
 import hus.censoCamas.repo.PacienteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class PacienteService {
     }
     public Paciente findPacienteById(Integer id){
         return pacienteRepo.findPacienteById(id)
-                .orElseThrow(()-> new UserNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
+                .orElseThrow(()-> new ObjectNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
     }
 
     public void deletePaciente(Integer id){
