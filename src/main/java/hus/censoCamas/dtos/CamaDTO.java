@@ -1,4 +1,6 @@
-package hus.censoCamas.model;
+package hus.censoCamas.dtos;
+
+import hus.censoCamas.model.Cama;
 
 public class CamaDTO {
     private int oid;
@@ -27,6 +29,47 @@ public class CamaDTO {
         this.documento = documento;
         this.ingreso = ingreso;
         this.fechaIngreso = fechaIngreso;
+    }
+
+    public void mapDTO(Cama cama, PacienteDTO pacienteDTO){
+        setPaciente(pacienteDTO.getPaciente());
+        setDocumento(pacienteDTO.getDocumento());
+        setIngreso(pacienteDTO.getConsecutivo());
+        setFechaIngreso(pacienteDTO.getFechaIngreso());
+        setOid(cama.getIdCama());
+        setCodigo(cama.getCodigoCama());
+        setNombre(cama.getNombreCama());
+        setGrupo(cama.getGrupo().getNombre());
+        setSubgrupo(cama.getSubgrupo().getNombre());
+        setTipocama(cama.getTipoCama().getNombre());
+        setEstadoCamaDTO(cama);
+    }
+
+    private void setEstadoCamaDTO(Cama cama){
+        switch (cama.getEstadoCama()){
+            case 1:
+                setEstado("Desocupada");
+                break;
+            case 2:
+                checkEstadoOcupado(cama);
+                break;
+            case 3:
+                setEstado("Bloqueada");
+                break;
+        }
+    }
+
+    private void checkEstadoOcupado(Cama cama){
+        if(isPacienteRegistrado()){
+            setEstado("Ocupada");
+        }
+        else{
+            setEstado("Desocupada");
+            cama.liberarCama();
+        }
+    }
+    private boolean isPacienteRegistrado(){
+        return !getPaciente().isEmpty();
     }
 
     public int getOid() {

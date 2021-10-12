@@ -1,10 +1,24 @@
-package hus.censoCamas.model;
+package hus.censoCamas.dtos;
 
 public class PacienteDTO {
     private String paciente;
     private String documento;
     private String consecutivo;
     private String fechaIngreso;
+
+    public PacienteDTO(){
+        this.paciente = "";
+        this.documento = "";
+        this.consecutivo = "";
+        this.fechaIngreso = "";
+    }
+
+    public PacienteDTO(String paciente, String documento, String consecutivo, String fechaIngreso) {
+        this.paciente = paciente;
+        this.documento = documento;
+        this.consecutivo = consecutivo;
+        this.fechaIngreso = fechaIngreso;
+    }
 
     public PacienteDTO(String[] paciente) {
         this.paciente = paciente[0];

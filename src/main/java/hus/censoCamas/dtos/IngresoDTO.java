@@ -1,31 +1,23 @@
-package hus.censoCamas.model;
+package hus.censoCamas.dtos;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
-public class IngresoPaciente {
-    @JsonProperty("documento")
+public class IngresoDTO {
     private String documento;
-    @JsonProperty("paciente")
     private String paciente;
-    @JsonProperty("consecutivo")
     private int consecutivo;
-    @JsonProperty("fechaIngreso")
     private LocalDate fechaIngreso;
-    @JsonProperty("estadoIngreso")
     private String estado;
-    @JsonProperty("tipoIngreso")
     private String tipoIngreso;
-    @JsonProperty("causaIngreso")
     private String causaIngreso;
-    @JsonProperty("tipoRiesgo")
     private String tipoRiesgo;
 
-    public IngresoPaciente(){}
+    public IngresoDTO(){}
 
-    public IngresoPaciente(String documento, String paciente, int consecutivo, LocalDate fechaIngreso, String estado, String tipoIngreso, String causaIngreso, String tipoRiesgo) {
+    public IngresoDTO(String documento, String paciente, int consecutivo, LocalDate fechaIngreso, String estado, String tipoIngreso, String causaIngreso, String tipoRiesgo) {
         this.documento = documento;
         this.paciente = paciente;
         this.consecutivo = consecutivo;
