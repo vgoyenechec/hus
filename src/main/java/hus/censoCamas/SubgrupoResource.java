@@ -22,19 +22,16 @@ public class SubgrupoResource {
 
     @GetMapping("/all")
     public ResponseEntity<List<Subgrupo>> findAllSubgrupos(){
-        List<Subgrupo> subgrupos = subgrupoService.findAllSubgrupos();
-        return new ResponseEntity<>(subgrupos, HttpStatus.OK);
+        return ResponseEntity.ok().body(subgrupoService.findAllSubgrupos());
     }
 
     @GetMapping("/find/nombre={nombre}")
     public ResponseEntity<Subgrupo> findByNameSubgrupo(@PathVariable("nombre") String nombre){
-        Subgrupo subgrupo = subgrupoService.findByName(nombre);
-        return new ResponseEntity<>(subgrupo, HttpStatus.OK);
+        return ResponseEntity.ok().body(subgrupoService.findByName(nombre));
     }
     @GetMapping("/find/grupo={gr}")
     public ResponseEntity<List<String>> findByGrupo(@PathVariable("gr") String gr){
-        List<String> subgrupo = subgrupoService.findByGrupo(gr);
-        return new ResponseEntity<>(subgrupo, HttpStatus.OK);
+        return ResponseEntity.ok().body(subgrupoService.findByGrupo(gr));
     }
 
 }

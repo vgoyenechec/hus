@@ -2,7 +2,6 @@ package hus.censoCamas;
 
 import hus.censoCamas.model.Grupo;
 import hus.censoCamas.service.GrupoService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +21,11 @@ public class GrupoResource {
 
     @GetMapping("/all")
     public ResponseEntity<List<String>> findAllGrupos(){
-        List<String> grupos = grupoService.findAllNombres();
-        return new ResponseEntity<>(grupos, HttpStatus.OK);
+        return ResponseEntity.ok().body(grupoService.findAllNombres());
     }
 
     @GetMapping("/find/nombre={nombre}")
     public ResponseEntity<Grupo> findByNameGrupo(@PathVariable("nombre") String nombre){
-        Grupo grupo = grupoService.findByName(nombre);
-        return new ResponseEntity<>(grupo, HttpStatus.OK);
+        return ResponseEntity.ok().body(grupoService.findByName(nombre));
     }
 }
