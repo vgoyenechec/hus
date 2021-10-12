@@ -18,26 +18,9 @@ public class PacienteService {
         this.pacienteRepo = pacienteRepo;
     }
 
-    public Paciente addPaciente(Paciente paciente){
-        return pacienteRepo.save(paciente);
-    }
-    public List<Paciente> findAllPacientes(){
-        return pacienteRepo.findAll();
-    }
-    public Paciente updatePaciente(Paciente paciente){
-        return pacienteRepo.save(paciente);
-    }
-
-    public List<Paciente> findTopPacientes(int top){
-        return pacienteRepo.findAllTop(top);
-    }
     public Paciente findPacienteById(Integer id){
         return pacienteRepo.findPacienteById(id)
                 .orElseThrow(()-> new ObjectNotFoundException("Paciente identificado con el ID "+id+"no se ha encontrado"));
-    }
-
-    public void deletePaciente(Integer id){
-        pacienteRepo.deletePacienteById(id);
     }
 
     public List<Paciente> findPacienteByName(String nombrePaciente){

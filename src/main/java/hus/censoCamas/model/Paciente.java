@@ -56,76 +56,38 @@ public class Paciente implements Serializable{
         return documento;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
     public int getTipoDocumento() {
         return tipoDocumento;
-    }
-
-    public void setTipoDocumento(int tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
     }
 
     public String getLugarExpedicion() {
         return lugarExpedicion;
     }
 
-    public void setLugarExpedicion(String lugarExpedicion) {
-        this.lugarExpedicion = lugarExpedicion;
-    }
-
     public String getPrimerNombre() {
         return prinom;
-    }
-
-    public void setPrimerNombre(String prinom) {
-        this.prinom = prinom;
     }
 
     public String getSegundoNombre() {
         return segnom;
     }
 
-    public void setSegundoNombre(String segnom) {
-        this.segnom = segnom;
-    }
-
     public String getPrimerApellido() {
         return priape;
     }
 
-    public void setPrimerApellido(String priape) {
-        this.priape = priape;
-    }
-
-    public String getSegundoApellido() {
-        return segape;
-    }
-
-    public void setSegundoApellido(String segape) {
-        this.segape = segape;
-    }
+    public String getSegundoApellido() { return segape; }
 
     public LocalDateTime getFechaNacimiento() {
         return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public int getSexo() {
         return sexo;
     }
 
-    public void setSexo(int sexo) {
-        this.sexo = sexo;
-    }
-
     public String getNombreCompleto(){
-        return prinom+' '+segnom+' '+priape+' '+segape;
+        return getPrimerNombre()+' '+getSegundoNombre()+' '+getPrimerApellido()+' '+getSegundoApellido();
     }
 
     @Override
