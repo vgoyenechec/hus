@@ -49,20 +49,36 @@ public class Ingreso implements Serializable {
         this.estado = estado;
     }
 
-    public boolean isEstadoRegistrado(){
-        return getEstado()==0;
+    public void ifCamaOcupadaLiberar(){
+        if (getCama().isOcupada()) {
+            getCama().liberarCama();
+            setCama(null);
+        } else {
+            getCama().checkEstado();
+        }
+    }
+
+    public void realizarTraslado(Cama nuevaCama){
+        desvincularCama();
+        nuevaCama.ocuparCama();
+        setCama(nuevaCama);
     }
 
     public boolean isCamaVinculada(){
         return getCama() != null;
     }
-    public String getCodigoCamaVinculada(){
-        return getCama().getCodigoCama();
+
+    public void desvincularCama(){
+        if(isCamaVinculada()){
+            getCama().liberarCama();
+            setCama(null);
+        }
     }
 
     public int getIdPaciente(){
         return getPaciente().getId();
     }
+
     public Integer getId() {
         return id;
     }
@@ -71,9 +87,9 @@ public class Ingreso implements Serializable {
         this.id = id;
     }
 
-    public int getConsecutivo() { return consecutivo; }
-
-    public void setConsecutivo(int consecutivo) { this.consecutivo = consecutivo; }
+    public int getConsecutivo() {
+        return consecutivo;
+    }
 
     public Paciente getPaciente() {
         return paciente;
@@ -95,46 +111,24 @@ public class Ingreso implements Serializable {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(LocalDateTime fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
     public int getEstado() {
         return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
     }
 
     public int getCentroAtencion() {
         return centroAtencion;
     }
 
-    public void setCentroAtencion(int centroAtencion) { this.centroAtencion = centroAtencion; }
-
     public int getTipoIngreso() {
         return tipoIngreso;
-    }
-
-    public void setTipoIngreso(int tipoIngreso) {
-        this.tipoIngreso = tipoIngreso;
     }
 
     public int getCausa() {
         return causa;
     }
 
-    public void setCausa(int causa) {
-        this.causa = causa;
-    }
-
     public int getTipoRiesgo() {
         return tipoRiesgo;
-    }
-
-    public void setTipoRiesgo(int tipoRiesgo) {
-        this.tipoRiesgo = tipoRiesgo;
     }
 
     @Override

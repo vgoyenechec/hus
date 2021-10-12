@@ -3,7 +3,7 @@ package hus.censoCamas.service;
 import hus.censoCamas.exception.ObjectNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
-import hus.censoCamas.model.IngresoPaciente;
+import hus.censoCamas.dtos.IngresoDTO;
 import hus.censoCamas.model.Paciente;
 import hus.censoCamas.repo.CamaRepo;
 import hus.censoCamas.repo.IngresoRepo;
@@ -32,7 +32,8 @@ public class IngresoService {
         this.pacienteRepo = pacienteRepo;
     }
 
-    private IngresoPaciente mapIngreso(Paciente paciente, Ingreso ingreso, IngresoPaciente nuevo){
+    private IngresoDTO mapIngreso(Paciente paciente, Ingreso ingreso){
+        IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
@@ -44,81 +45,37 @@ public class IngresoService {
         return nuevo;
     }
 
-    public IngresoPaciente findByPacienteDoc(String doc){
+    public IngresoDTO findByPacienteDoc(String doc){
         Paciente paciente = pacienteRepo.findByDocumento(doc)
                 .orElseThrow(()-> new ObjectNotFoundException("No se ha encontrado ningun paciente con número de documento "+doc));
         Ingreso ingreso = ingresoRepo.findByPacienteOrderByFechaIngresoDesc(paciente.getId())
                 .orElseThrow(()-> new ObjectNotFoundException("No se ha encontrado ingreso con número "+doc));
-        return mapIngreso(paciente, ingreso, new IngresoPaciente());
+        return mapIngreso(paciente, ingreso);
     }
 
-    public IngresoPaciente findByConsecutivo(int consecutivo){
+    public IngresoDTO findByConsecutivo(int consecutivo){
         Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
         Paciente paciente  = pacienteRepo.findPacienteById(ingreso.getIdPaciente())
                 .orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
-        return mapIngreso(paciente, ingreso, new IngresoPaciente());
+        return mapIngreso(paciente, ingreso);
     }
 
    public Ingreso updateIngresoCamaParaTraslado(int consecutivo, String codigo){
         Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
         Cama nuevaCama = camaRepo.findByCodigoAndDesocupada(codigo).orElseThrow(()-> new ObjectNotFoundException("\nNo encontró cama disponible con codigo "+codigo));
 
-        if(ingreso.isEstadoRegistrado()){
-            realizarTraslado(ingreso,nuevaCama);
-        }
-        else{
-            throw new ObjectNotFoundException("El estado del ingreso no es Registrado, no se puede hacer traslado");
-        }
+        ingreso.realizarTraslado(nuevaCama);
         return ingreso;
     }
 
-    private void realizarTraslado(Ingreso ingreso, Cama nuevaCama){
-        liberarCamaIfRelatedToIngreso(ingreso);
-        ocuparCama(nuevaCama);
-        setCamaInIngreso(ingreso, nuevaCama);
-    }
-
-    private void liberarCamaIfRelatedToIngreso(Ingreso ingreso){
-        if (ingreso.isCamaVinculada()) {
-            Cama cama = camaRepo.findByCodigo(ingreso.getCodigoCamaVinculada()).orElseThrow(() -> new ObjectNotFoundException("No encuentra cama"));
-            liberarCama(cama);
+    public void liberarCamaIngreso(int id) {
+        try{
+            Ingreso ingreso = getIngresoByConsecutivo(id);
+            ingreso.ifCamaOcupadaLiberar();
         }
-    }
-
-    private void ocuparCama(Cama nuevaCama){
-        nuevaCama.setEstadoCama(2);
-        camaRepo.save(nuevaCama);
-    }
-
-    public Cama liberarCamaIngreso(int id){
-        Ingreso ingreso = getIngresoByConsecutivo(id);
-        Cama cama = ingreso.getCama();
-
-        if(cama.isOcupada()){
-            liberarCama(cama);
-            setCamaInIngreso(ingreso, null);
+        catch (Exception e){
+            throw new ObjectNotFoundException("Cama no vinculada a Ingreso!");
         }
-        else{
-            checkEstadoCama(cama);
-        }
-        return cama;
-    }
-
-    private void setCamaInIngreso(Ingreso ingreso, Cama cama){
-        ingreso.setCama(cama);
-        ingresoRepo.save(ingreso);
-    }
-
-    private void checkEstadoCama(Cama cama){
-        if(cama.isBloqueada()){
-            throw new ObjectNotFoundException("\nCama Bloqueada!");
-        }
-        else{ throw new ObjectNotFoundException("\nLa cama "+cama.getCodigoCama()+ " ya está disponible"); }
-    }
-
-    private void liberarCama(Cama cama){
-        cama.setEstadoCama(1);
-        camaRepo.save(cama);
     }
 
     private Ingreso getIngresoByConsecutivo(int consecutivo){

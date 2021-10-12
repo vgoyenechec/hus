@@ -12,8 +12,6 @@ public interface IngresoRepo extends JpaRepository<Ingreso, Integer> {
             "and AINESTADO like '0'", nativeQuery = true)
     Optional<Ingreso> findIngresoRegistradoByConsecutivo(int consecutivo);
 
-    Optional<Ingreso> findIngresoByConsecutivo(int consecutivo);
-
     @Query(value = "Select top(1) * from ADNINGRESO \n" +
             "where GENPACIEN LIKE ?1 \n" +
             "Order by AINFECING desc", nativeQuery = true)
