@@ -1,8 +1,6 @@
-package hus.censoCamas.service;
+package hus.censoCamas.security;
 
 import hus.censoCamas.exception.ObjectNotFoundException;
-import hus.censoCamas.model.Usuario;
-import hus.censoCamas.repo.UsuarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;

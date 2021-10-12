@@ -1,7 +1,5 @@
-package hus.censoCamas;
+package hus.censoCamas.security;
 
-import hus.censoCamas.model.Usuario;
-import hus.censoCamas.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,32 +21,27 @@ public class UsuarioResource {
     }
     @GetMapping("/all")
     public ResponseEntity<List<Usuario>> getAllUsuarios(){
-        List<Usuario> usuarios = usuarioService.findAllUsuarios();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        return ResponseEntity.ok().body(usuarioService.findAllUsuarios());
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable("id") Long id) {
-        Usuario usuario = usuarioService.findUsuarioById(id);
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
+        return ResponseEntity.ok().body(usuarioService.findUsuarioById(id));
     }
 
     @GetMapping("/find/username={username}")
     public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
-        Usuario usuario = usuarioService.findUsuariosByUsername(username);
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
+        return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
     }
 
     @PostMapping("/add")
     public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
-        Usuario nuevoUsuario = usuarioService.addUsuario(usuario);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.OK);
+        return ResponseEntity.ok().body(usuarioService.addUsuario(usuario));
     }
 
     @PutMapping("/update")
     public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario){
-        Usuario updateUsuario = usuarioService.updateUsuario(usuario);
-        return new ResponseEntity<>(updateUsuario, HttpStatus.OK);
+        return ResponseEntity.ok().body(usuarioService.updateUsuario(usuario));
     }
 
     @DeleteMapping("/delete/{id}")

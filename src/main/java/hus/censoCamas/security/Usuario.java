@@ -1,4 +1,4 @@
-package hus.censoCamas.model;
+package hus.censoCamas.security;
 
 import javax.persistence.*;
 import java.io.Serializable;

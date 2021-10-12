@@ -1,5 +1,5 @@
-package hus.censoCamas.model;
-/*
+package hus.censoCamas.security;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,4 +51,3 @@ public class UsuarioPrincipal implements UserDetails {
         return this.usuario.isAutenticado();
     }
 }
-*/
