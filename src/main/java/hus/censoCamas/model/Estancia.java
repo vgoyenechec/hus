@@ -1,5 +1,7 @@
 package hus.censoCamas.model;
 
+import hus.censoCamas.security.Usuario;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
