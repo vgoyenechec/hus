@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://190.26.4.166;databaseName=DGEmpres81
+    username: estudiantes
+    password: Hus21.uis*
+    driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      validationTimeout:
+        jpa: 300000
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        use_nationalized_character_data: true
