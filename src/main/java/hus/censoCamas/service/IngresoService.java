@@ -65,6 +65,7 @@ public class IngresoService {
         Cama nuevaCama = camaRepo.findByCodigoAndDesocupada(codigo).orElseThrow(()-> new ObjectNotFoundException("\nNo encontró cama disponible con codigo "+codigo));
 
         ingreso.realizarTraslado(nuevaCama);
+        camaRepo.save(nuevaCama);
         return ingreso;
     }
 
