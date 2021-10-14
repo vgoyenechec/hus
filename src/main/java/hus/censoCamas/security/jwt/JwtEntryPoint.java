@@ -1,3 +1,4 @@
+
 package hus.censoCamas.security.jwt;
 
 import org.slf4j.*;
@@ -16,7 +17,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {
-        logger.error("fail en el método commence");
+        logger.error("fail en el método commence " +e.getMessage());
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no autorizado");
     }
 }
