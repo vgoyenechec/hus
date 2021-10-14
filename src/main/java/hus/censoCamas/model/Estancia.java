@@ -1,6 +1,6 @@
 package hus.censoCamas.model;
 
-import hus.censoCamas.security.Usuario;
+import hus.censoCamas.security.entity.Usuario;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,22 +31,18 @@ public class Estancia implements Serializable {
     @Column(name = "HESTRAURG")
     private boolean trasladoUrg;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="GENUSUARIO", referencedColumnName = "OID",nullable=false)
-    private Usuario usuario;
-
     public Estancia(){
 
     }
 
-    public Estancia(Ingreso ingreso, Cama cama, LocalDateTime fechaIngresoCama, int tipoEstancia, LocalDateTime fechaEgresoCama, boolean trasladoUrg, Usuario usuario) {
+    public Estancia(Ingreso ingreso, Cama cama, LocalDateTime fechaIngresoCama, int tipoEstancia,
+                    LocalDateTime fechaEgresoCama, boolean trasladoUrg) {
         this.ingreso = ingreso;
         this.cama = cama;
         this.fechaIngresoCama = fechaIngresoCama;
         this.tipoEstancia = tipoEstancia;
         this.fechaEgresoCama = fechaEgresoCama;
         this.trasladoUrg = trasladoUrg;
-        this.usuario = usuario;
     }
 
     public Integer getId() {
@@ -103,13 +99,5 @@ public class Estancia implements Serializable {
 
     public void setTrasladoUrg(boolean trasladoUrg) {
         this.trasladoUrg = trasladoUrg;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 }
