@@ -1,6 +1,5 @@
-package hus.censoCamas.security.model;
+package hus.censoCamas.security.entity;
 
-import hus.censoCamas.security.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
+        return this.usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre().name())).collect(Collectors.toList());
     }
 
     @Override
@@ -47,6 +46,6 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.usuario.isAutenticado();
+        return true;
     }
 }

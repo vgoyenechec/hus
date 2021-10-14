@@ -1,5 +1,6 @@
-package hus.censoCamas.security;
+package hus.censoCamas.security.service;
 
+import hus.censoCamas.security.entity.UsuarioPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;

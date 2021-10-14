@@ -1,27 +1,29 @@
-package hus.censoCamas.security.model;
+package hus.censoCamas.security.entity;
 
 import hus.censoCamas.security.constant.Roles;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Entity(name ="HPNCENSOROL" )
+@Entity
 @Table(name = "HPNCENSOROL")
 public class Rol {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "OID",updatable = false,nullable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "OID", updatable = false, nullable = false)
     private Integer id;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "HPNROLNOMBRE")
-    private String nombre;
+    private Roles nombre;
 
-    public Rol() { }
-
-    public Rol(Integer id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+    public Rol() {
     }
 
-    public Rol(Roles rol) {
+    public Rol(@NotNull Roles nombre) {
+        this.nombre = nombre;
     }
 
     public Integer getId() {
@@ -32,11 +34,11 @@ public class Rol {
         this.id = id;
     }
 
-    public String getNombre() {
+    public Roles getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(Roles nombre) {
         this.nombre = nombre;
     }
 }

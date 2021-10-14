@@ -1,49 +1,85 @@
-package hus.censoCamas.security.service;
+package hus.censoCamas.security;
 
-import hus.censoCamas.security.model.Usuario;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import hus.censoCamas.security.constant.Roles;
+import hus.censoCamas.security.dto.*;
+import hus.censoCamas.security.jwt.JwtProvider;
+import hus.censoCamas.security.entity.*;
+import hus.censoCamas.security.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/auth")
+@CrossOrigin
 public class UsuarioResource {
-    private final UsuarioService usuarioService;
-    
-    public UsuarioResource(UsuarioService usuarioService){
-        this.usuarioService = usuarioService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    UsuarioService usuarioService;
+    @Autowired
+    RolService rolService;
+    @Autowired
+    JwtProvider jwtProvider;
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> nuevo(@Validated @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>("Todos los campos son obligatorios", HttpStatus.BAD_REQUEST);
+        }
+        if(usuarioService.existeUsuario(nuevoUsuario.getUsuario())){
+            return new ResponseEntity<>("Usuario ya existe", HttpStatus.BAD_REQUEST);
+        }
+        Usuario usuario =
+                new Usuario(nuevoUsuario.getUsuario(), nuevoUsuario.getNombre(), passwordEncoder.encode(nuevoUsuario.getClave()));
+        Set<Rol> roles = new HashSet<>();
+        roles.add(rolService.getRolByNombre(Roles.ROLE_USER));
+        if(nuevoUsuario.getRoles().contains("admin")){
+            roles.add(rolService.getRolByNombre(Roles.ROLE_ADMIN));
+        }
+        if(nuevoUsuario.getRoles().contains("superadmin")){
+            roles.add(rolService.getRolByNombre(Roles.ROLE_SUPERADMIN));
+            roles.add(rolService.getRolByNombre(Roles.ROLE_ADMIN));
+        }
+        usuario.setRoles(roles);
+        usuarioService.saveUsuario(usuario);
+        return new ResponseEntity<>("Usuario creado correctamente", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Validated @RequestBody LoginUsuario login, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return new ResponseEntity<>("Usuario o contraseña incorrecta", HttpStatus.BAD_REQUEST);
+        }
+        Authentication authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsuario(),login.getClave()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt =  jwtProvider.generateToken(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        JwtDTO jwtDTO = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+        return new ResponseEntity<>(jwtDTO,HttpStatus.OK);
     }
 
     @GetMapping("/home")
     public String showUser(){
         return "Funciona";
     }
-    @GetMapping("/all")
-    public ResponseEntity<List<Usuario>> getAllUsuarios(){
-        return ResponseEntity.ok().body(usuarioService.findAllUsuarios());
-    }
 
     @GetMapping("/find/username={username}")
     public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(usuarioService.saveUsuario(usuario));
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(usuarioService.saveUsuario(usuario));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") Long id){
-        usuarioService.deleteUsuario(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

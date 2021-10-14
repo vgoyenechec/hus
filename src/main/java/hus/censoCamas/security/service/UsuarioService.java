@@ -1,6 +1,8 @@
-package hus.censoCamas.security;
+package hus.censoCamas.security.service;
 
 import hus.censoCamas.exception.ObjectNotFoundException;
+import hus.censoCamas.security.entity.Usuario;
+import hus.censoCamas.security.repo.UsuarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -9,31 +11,19 @@ import java.util.List;
 @Service
 @Transactional
 public class UsuarioService {
-    private final UsuarioRepo usuarioRepo;
-    private final RolRepo rolRepo;
-
     @Autowired
-    public UsuarioService(UsuarioRepo usuarioRepo, RolRepo rolRepo){
-        this.usuarioRepo = usuarioRepo;
-        this.rolRepo = rolRepo;
-    }
+    UsuarioRepo usuarioRepo;
 
     public Usuario saveUsuario(Usuario usuario){
         return usuarioRepo.save(usuario);
     }
 
-    public Rol saveRol(Rol rol){
-        return rolRepo.save(rol);
-    }
     public List<Usuario> findAllUsuarios(){
         return usuarioRepo.findAll();
     }
-    public void addRoleToUser(String username, String rolename){
-        Usuario usuario = usuarioRepo.findByUsuario(username)
-                .orElseThrow(()->new ObjectNotFoundException("No se encontro usuario con este nombre"));
-        Rol rol = rolRepo.findByNombre(rolename)
-                .orElseThrow(()->new ObjectNotFoundException("No se encontro usuario con este nombre"));
-        usuario.getRoles().add(rol);
+
+    public boolean existeUsuario(String usuario){
+        return usuarioRepo.existsByUsuario(usuario);
     }
 
     public void deleteUsuario(Long id) {
