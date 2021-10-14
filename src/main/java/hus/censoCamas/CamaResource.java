@@ -17,11 +17,6 @@ public class CamaResource {
         this.camaService = camaService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Cama>> getAllCamas(){
-        return ResponseEntity.ok().body(camaService.findAllCamas());
-    }
-
     @GetMapping("/find/grupo={def}")
     public ResponseEntity<List<CamaDTO>> getCamaByGrupo(@PathVariable("def") String grupo){
         return ResponseEntity.ok().body(camaService.findCamaByGrupo(grupo));

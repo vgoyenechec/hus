@@ -4,7 +4,6 @@ import hus.censoCamas.exception.ObjectNotFoundException;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.dtos.CamaDTO;
 import hus.censoCamas.dtos.PacienteDTO;
-import hus.censoCamas.model.Paciente;
 import hus.censoCamas.repo.CamaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,23 +21,8 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
-    public List<Cama> findAllCamas(){
-        return camaRepo.findAll();
-    }
-
     public List<Cama> findCamaByEstado(int estado){
         return camaRepo.findByEstado(estado);
-    }
-
-    public Cama bloquearCama(String codigo){
-        Cama cama = camaRepo.findByCodigo(codigo).orElseThrow(() -> new ObjectNotFoundException("No encuentra cama "+codigo));
-        cama.bloquearCama();
-        return cama;
-    }
-    public Cama desbloquearCama(String codigo){
-        Cama cama = camaRepo.findByCodigo(codigo).orElseThrow(() -> new ObjectNotFoundException("No encuentra cama "+codigo));
-        cama.liberarCama();
-        return cama;
     }
 
     public Cama findByCodigoCama(String codigo){
