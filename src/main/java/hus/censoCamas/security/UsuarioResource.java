@@ -7,6 +7,7 @@ import hus.censoCamas.security.entity.*;
 import hus.censoCamas.security.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -80,6 +81,13 @@ public class UsuarioResource {
     @GetMapping("/find/username={username}")
     public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
+    }
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") int id){
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.ok().build();
     }
 }
 

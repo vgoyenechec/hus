@@ -26,7 +26,7 @@ public class UsuarioService {
         return usuarioRepo.existsByUsuario(usuario);
     }
 
-    public void deleteUsuario(Long id) {
+    public void deleteUsuario(int id) {
         usuarioRepo.deleteUsuarioById(id);
     }
 
