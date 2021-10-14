@@ -21,13 +21,23 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
-    public List<Cama> findCamaByEstado(int estado){
-        return camaRepo.findByEstado(estado);
-    }
-
     public Cama findByCodigoCama(String codigo){
         return camaRepo.findByCodigo(codigo)
                 .orElseThrow(()-> new ObjectNotFoundException("no encontro cama con codigo "+ codigo));
+    }
+
+    public List<Cama> findAllNude(){
+        return camaRepo.findAll();
+    }
+
+    public List<CamaDTO> findAll(){
+        List<Cama> camas = camaRepo.findAll();
+        return queryCamas(camas);
+    }
+
+    public List<CamaDTO> findCamaByGrupoSubTipoEstado(String grupo, String subgrupo, String tipo, String estado){
+        List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipoAndEstado(grupo, subgrupo, tipo, estado);
+        return queryCamas(camas);
     }
 
     public List<CamaDTO> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
