@@ -1,46 +1,46 @@
-package hus.censoCamas.security;
+package hus.censoCamas.security.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "GENUSUARIO")
-public class Usuario implements Serializable{
-    @Id
+@Entity(name = "HPNCENSOUSU")
+@Table(name = "HPNCENSOUSU")
+public class Usuario {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OID",updatable = false,nullable = false)
     private Integer id;
-    @Column(name = "GENROL")
-    private int rol;
-    @Column(name = "USUNOMBRE")
+    @Column(name = "HPNUSUNOMBRE")
     private String usuario;
-    @Column(name = "USUDESCRI")
-    private String descripcion;
-    @Column(name = "USUCLAVE")
+    @Column(name = "HPNUSUDESCRI")
+    private String nombre;
+    @Column(name = "HPNUSUCLAVE")
     private String clave;
-    @Column(name = "USUESTADO")
+    @Column(name = "HPNUSUESTADO")
     private int estado;
-    @Column(name = "USUULTAUT")
+    @Column(name = "HPNUSUULTAUT")
     private LocalDateTime ultimaAutenticacion;
-    @Column(name = "USUFALLO1")
+    @Column(name = "HPNUSUFALLO1")
     private int fallosClave;
-    @Column(name = "USUAUTENT")
+    @Column(name = "HPNUSUAUTENT")
     private boolean autenticado;
-    @Transient
-    private String[] permisos;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "HPNUSU_ROL", joinColumns = @JoinColumn(name="OIDROL", referencedColumnName = "OID"),
+            inverseJoinColumns = @JoinColumn(name = "OIDUSUARIO", referencedColumnName = "OID") )
+    private Set<Rol> roles = new HashSet<>();
 
     public Usuario(){}
 
-    public Usuario(int rol, String usuario, String descripcion, String clave, int estado, LocalDateTime ultimaAutenticacion, int fallosClave, boolean autenticado, String[] permisos) {
-        this.rol = rol;
+    public Usuario(String usuario, String nombre, String clave, int estado,
+                   LocalDateTime ultimaAutenticacion, int fallosClave, boolean autenticado) {
         this.usuario = usuario;
-        this.descripcion = descripcion;
+        this.nombre = nombre;
         this.clave = clave;
         this.estado = estado;
         this.ultimaAutenticacion = ultimaAutenticacion;
         this.fallosClave = fallosClave;
         this.autenticado = autenticado;
-        this.permisos = permisos;
     }
 
     public Integer getId() {
@@ -51,14 +51,6 @@ public class Usuario implements Serializable{
         this.id = id;
     }
 
-    public int getRol() {
-        return rol;
-    }
-
-    public void setRol(int rol) {
-        this.rol = rol;
-    }
-
     public String getUsuario() {
         return usuario;
     }
@@ -67,12 +59,12 @@ public class Usuario implements Serializable{
         this.usuario = usuario;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getnombre() {
+        return nombre;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setnombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getClave() {
@@ -115,11 +107,11 @@ public class Usuario implements Serializable{
         this.autenticado = autenticado;
     }
 
-    public String[] getPermisos() {
-        return permisos;
+    public Set<Rol> getRoles() {
+        return roles;
     }
 
-    public void setPermisos(String[] permisos) {
-        this.permisos = permisos;
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
     }
 }

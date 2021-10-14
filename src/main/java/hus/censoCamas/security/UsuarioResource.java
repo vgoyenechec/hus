@@ -1,5 +1,6 @@
-package hus.censoCamas.security;
+package hus.censoCamas.security.service;
 
+import hus.censoCamas.security.model.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +25,6 @@ public class UsuarioResource {
         return ResponseEntity.ok().body(usuarioService.findAllUsuarios());
     }
 
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(usuarioService.findUsuarioById(id));
-    }
-
     @GetMapping("/find/username={username}")
     public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
@@ -36,12 +32,12 @@ public class UsuarioResource {
 
     @PostMapping("/add")
     public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(usuarioService.addUsuario(usuario));
+        return ResponseEntity.ok().body(usuarioService.saveUsuario(usuario));
     }
 
     @PutMapping("/update")
     public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(usuarioService.updateUsuario(usuario));
+        return ResponseEntity.ok().body(usuarioService.saveUsuario(usuario));
     }
 
     @DeleteMapping("/delete/{id}")

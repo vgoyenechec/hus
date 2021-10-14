@@ -10,28 +10,30 @@ import java.util.List;
 @Transactional
 public class UsuarioService {
     private final UsuarioRepo usuarioRepo;
+    private final RolRepo rolRepo;
 
     @Autowired
-    public UsuarioService(UsuarioRepo usuarioRepo){
+    public UsuarioService(UsuarioRepo usuarioRepo, RolRepo rolRepo){
         this.usuarioRepo = usuarioRepo;
+        this.rolRepo = rolRepo;
     }
 
-
-    public Usuario addUsuario(Usuario usuario){
+    public Usuario saveUsuario(Usuario usuario){
         return usuarioRepo.save(usuario);
     }
 
+    public Rol saveRol(Rol rol){
+        return rolRepo.save(rol);
+    }
     public List<Usuario> findAllUsuarios(){
         return usuarioRepo.findAll();
     }
-
-    public Usuario updateUsuario(Usuario usuario){
-        return usuarioRepo.save(usuario);
-    }
-
-    public Usuario findUsuarioById(Long id){
-        return usuarioRepo.findUsuarioById(id)
-                .orElseThrow(()-> new ObjectNotFoundException("El usuario con id "+id+" no se ha encontrado"));
+    public void addRoleToUser(String username, String rolename){
+        Usuario usuario = usuarioRepo.findByUsuario(username)
+                .orElseThrow(()->new ObjectNotFoundException("No se encontro usuario con este nombre"));
+        Rol rol = rolRepo.findByNombre(rolename)
+                .orElseThrow(()->new ObjectNotFoundException("No se encontro usuario con este nombre"));
+        usuario.getRoles().add(rol);
     }
 
     public void deleteUsuario(Long id) {
