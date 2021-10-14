@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.cors.CorsConfiguration;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
+@EntityScan(basePackages = {"hus.censoCamas.security.entity","hus.censoCamas.model"})
 public class CensoCamasApplication implements CommandLineRunner {
 
 	@Autowired
