@@ -4,7 +4,7 @@
     <module name="censoCamas" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="hus.censoCamas.security.*" />
+        <option name="PATTERN" value="hus.censoCamas.security.entity.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

@@ -9,10 +9,13 @@ spring:
         jpa: 300000
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
         use_nationalized_character_data: true
+jwt:
+  secret: secret
+  expiration: 36000
