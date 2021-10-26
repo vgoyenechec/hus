@@ -8,7 +8,9 @@ import java.util.Set;
 @Entity(name = "HPNCENSOUSU")
 @Table(name = "HPNCENSOUSU")
 public class Usuario {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name="user_generator", sequenceName = "user_sequence", allocationSize=1)
     @Column(name = "OID",updatable = false,nullable = false)
     private Integer id;
     @NotNull @Column(name = "HPNUSUNOMBRE")
@@ -18,8 +20,8 @@ public class Usuario {
     @NotNull @Column(name = "HPNUSUCLAVE")
     private String clave;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "HPNUSUROL", joinColumns = @JoinColumn(name="OIDROL", referencedColumnName = "OID"),
-            inverseJoinColumns = @JoinColumn(name = "OIDUSUARIO", referencedColumnName = "OID") )
+    @JoinTable(name = "HPNUSUROL", joinColumns = @JoinColumn(name = "OIDUSUARIO"),
+            inverseJoinColumns = @JoinColumn(name = "OIDROL") )
     private Set<Rol> roles = new HashSet<>();
 
     public Usuario(){}
