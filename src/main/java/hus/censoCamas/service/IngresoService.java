@@ -65,6 +65,7 @@ public class IngresoService {
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
+        nuevo.setCama(ingreso.getCama().getCodigoCama());
         nuevo.setConsecutivo(ingreso.getConsecutivo());
         nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);

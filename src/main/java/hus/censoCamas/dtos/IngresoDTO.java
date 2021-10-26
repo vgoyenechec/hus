@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class IngresoDTO {
     private String documento;
     private String paciente;
+    private String cama;
     private int consecutivo;
     private LocalDate fechaIngreso;
     private String estado;
@@ -13,6 +14,10 @@ public class IngresoDTO {
     private String tipoRiesgo;
 
     public IngresoDTO(){}
+
+    public String getCama() { return cama; }
+
+    public void setCama(String cama) { this.cama = cama; }
 
     public String getDocumento() {
         return documento;
