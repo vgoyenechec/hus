@@ -1,4 +1,4 @@
-package hus.censoCamas;
+package hus.censoCamas.controller;
 
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.dtos.CamaDTO;
@@ -10,7 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/camas")
-public class CamaResource {
+public class
+ CamaResource {
     private final CamaService camaService;
 
     public CamaResource(CamaService camaService){
@@ -34,11 +35,6 @@ public class CamaResource {
     @GetMapping("/find/grupo={def}/subgrupo={sub}")
     public ResponseEntity<List<CamaDTO>> getCamaByGrupoAndSub(@PathVariable("def") String grupo,@PathVariable("sub") String sub){
         return ResponseEntity.ok().body(camaService.findCamaByGrupoSub(grupo, sub));
-    }
-
-    @GetMapping("/find/grupo={def}/subgrupo={sub}/tipo={tipo}")
-    public ResponseEntity<List<CamaDTO>> getCamaByGrupoAndSubAndTipo(@PathVariable("def") String grupo, @PathVariable("sub") String sub, @PathVariable("tipo") String tipo){
-        return ResponseEntity.ok().body(camaService.findCamaByGrupoSubTipo(grupo, sub, tipo));
     }
 
     @GetMapping("/find/grupo={def}/subgrupo={sub}/tipo={tipo}/estado={est}")
