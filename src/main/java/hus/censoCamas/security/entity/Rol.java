@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "HPNCENSOROL")
 public class Rol {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rol_generator")
+    @SequenceGenerator(name="rol_generator", sequenceName = "rol_sequence", allocationSize=1)
     @Column(name = "OID", updatable = false, nullable = false)
     private Integer id;
 

@@ -21,6 +21,18 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
+    public void bloquearCama(String codigo){
+        Cama cama = findByCodigoCama(codigo);
+        cama.bloquearCama();
+        camaRepo.save(cama);
+    }
+
+    public void desbloquearCama(String codigo){
+        Cama cama = findByCodigoCama(codigo);
+        cama.desbloquearCama();
+        camaRepo.save(cama);
+    }
+
     public Cama findByCodigoCama(String codigo){
         return camaRepo.findByCodigo(codigo)
                 .orElseThrow(()-> new ObjectNotFoundException("no encontro cama con codigo "+ codigo));
@@ -37,11 +49,6 @@ public class CamaService {
 
     public List<CamaDTO> findCamaByGrupoSubTipoEstado(String grupo, String subgrupo, String tipo, String estado){
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipoAndEstado(grupo, subgrupo, tipo, estado);
-        return queryCamas(camas);
-    }
-
-    public List<CamaDTO> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
-        List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
         return queryCamas(camas);
     }
 

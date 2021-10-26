@@ -1,4 +1,4 @@
-package hus.censoCamas;
+package hus.censoCamas.controller;
 
 import hus.censoCamas.model.Tipocama;
 import hus.censoCamas.service.TipocamaService;

@@ -51,6 +51,8 @@ public class Cama implements Serializable{
 
     public void bloquearCama(){ setEstadoCama(3); }
 
+    public void desbloquearCama(){ setEstadoCama(1); }
+
     public boolean isDesocupada(){ return getEstadoCama() == 1; }
 
     public boolean isOcupada(){

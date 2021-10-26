@@ -1,8 +1,5 @@
 package hus.censoCamas.dtos;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.LocalDate;
 
 public class IngresoDTO {
@@ -16,17 +13,6 @@ public class IngresoDTO {
     private String tipoRiesgo;
 
     public IngresoDTO(){}
-
-    public IngresoDTO(String documento, String paciente, int consecutivo, LocalDate fechaIngreso, String estado, String tipoIngreso, String causaIngreso, String tipoRiesgo) {
-        this.documento = documento;
-        this.paciente = paciente;
-        this.consecutivo = consecutivo;
-        this.fechaIngreso = fechaIngreso;
-        this.estado = estado;
-        this.tipoIngreso = tipoIngreso;
-        this.causaIngreso = causaIngreso;
-        this.tipoRiesgo = tipoRiesgo;
-    }
 
     public String getDocumento() {
         return documento;

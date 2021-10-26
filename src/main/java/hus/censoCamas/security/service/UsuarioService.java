@@ -14,8 +14,8 @@ public class UsuarioService {
     @Autowired
     UsuarioRepo usuarioRepo;
 
-    public Usuario saveUsuario(Usuario usuario){
-        return usuarioRepo.save(usuario);
+    public void saveUsuario(Usuario usuario){
+        usuarioRepo.save(usuario);
     }
 
     public List<Usuario> findAllUsuarios(){

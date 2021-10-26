@@ -28,6 +28,6 @@ public class PacienteService {
     }
 
     public List<Paciente> findPacienteByDocumento(String documento){
-        return pacienteRepo.findByDocumentoStartsWith(documento);
+        return pacienteRepo.findByDocumentoStartsWith(documento).orElseThrow(RuntimeException::new);
     }
 }
