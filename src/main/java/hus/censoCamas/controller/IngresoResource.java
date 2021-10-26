@@ -1,4 +1,4 @@
-package hus.censoCamas;
+package hus.censoCamas.controller;
 
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ingreso")
@@ -24,8 +26,13 @@ public class IngresoResource {
     }
 
     @GetMapping("/find/documento={doc}")
-    public ResponseEntity<IngresoDTO> getIngresoByPacienteDoc(@PathVariable("doc") String doc){
+    public ResponseEntity<List<IngresoDTO>> getIngresoByPacienteDoc(@PathVariable("doc") String doc){
         return ResponseEntity.ok().body(ingresoService.findByPacienteDoc(doc));
+    }
+
+    @GetMapping("/find/nombre={nombre}")
+    public ResponseEntity<List<IngresoDTO>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
+        return ResponseEntity.ok().body(ingresoService.findByPacienteName(nombre));
     }
 
     @PutMapping("update/ingreso={ing}/cama={cama}")

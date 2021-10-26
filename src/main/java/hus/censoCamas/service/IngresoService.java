@@ -32,7 +32,36 @@ public class IngresoService {
         this.pacienteRepo = pacienteRepo;
     }
 
-    private IngresoDTO mapIngreso(Paciente paciente, Ingreso ingreso){
+    public IngresoDTO findByConsecutivo(int consecutivo){
+        Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
+        Paciente paciente  = pacienteRepo.findPacienteById(ingreso.getIdPaciente())
+                .orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
+        return mapIngresoDTO(paciente, ingreso);
+    }
+
+    public List<IngresoDTO> findByPacienteName(String nombre){
+        List<Ingreso> ingresos  = ingresoRepo.findIngresoRegistradoByPacienteNombre(nombre).orElseThrow(() -> new ObjectNotFoundException("no hay"));
+        return findPacientesList(ingresos);
+    }
+
+    public List<IngresoDTO> findByPacienteDoc(String doc){
+        List<Ingreso> ingresos  = ingresoRepo.findIngresoRegistradoByPacienteDocumento(doc).orElseThrow(() -> new ObjectNotFoundException("no hay"));
+        return findPacientesList(ingresos);
+    }
+
+    private List<IngresoDTO> findPacientesList(List<Ingreso> ingresos){
+        List<IngresoDTO> dtos = new ArrayList<>();
+        ingresos.forEach(ingreso -> {
+            try{
+                Paciente paciente = pacienteRepo.findPacienteById(ingreso.getIdPaciente()).orElseThrow(() -> new ObjectNotFoundException("no hay paciente"));
+                dtos.add(mapIngresoDTO(paciente, ingreso));
+            }
+            catch(Exception ignored){}
+        });
+        return dtos;
+    }
+
+    private IngresoDTO mapIngresoDTO(Paciente paciente, Ingreso ingreso){
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
@@ -43,21 +72,6 @@ public class IngresoService {
         nuevo.setCausaIngreso(causaIngreso[ingreso.getCausa()]);
         nuevo.setEstado(estadoIngreso[ingreso.getEstado()]);
         return nuevo;
-    }
-
-    public IngresoDTO findByPacienteDoc(String doc){
-        Paciente paciente = pacienteRepo.findByDocumento(doc)
-                .orElseThrow(()-> new ObjectNotFoundException("No se ha encontrado ningun paciente con número de documento "+doc));
-        Ingreso ingreso = ingresoRepo.findByPacienteOrderByFechaIngresoDesc(paciente.getId())
-                .orElseThrow(()-> new ObjectNotFoundException("No se ha encontrado ingreso con número "+doc));
-        return mapIngreso(paciente, ingreso);
-    }
-
-    public IngresoDTO findByConsecutivo(int consecutivo){
-        Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
-        Paciente paciente  = pacienteRepo.findPacienteById(ingreso.getIdPaciente())
-                .orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
-        return mapIngreso(paciente, ingreso);
     }
 
    public Ingreso updateIngresoCamaParaTraslado(int consecutivo, String codigo){
