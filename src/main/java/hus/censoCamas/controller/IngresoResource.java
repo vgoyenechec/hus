@@ -40,7 +40,7 @@ public class IngresoResource {
         return ResponseEntity.ok().body(ingresoService.updateIngresoCamaParaTraslado(ing, cama));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("update/ingreso={ing}")
     public ResponseEntity<Cama> liberarCamaEnIngreso(@PathVariable("ing") int ing){
         ingresoService.liberarCamaIngreso(ing);
