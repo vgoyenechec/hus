@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class IngresoDTO {
     private String documento;
     private String paciente;
-    private String cama; 
+    private String cama;
     private int consecutivo;
     private LocalDate fechaIngreso;
     private String estado;
