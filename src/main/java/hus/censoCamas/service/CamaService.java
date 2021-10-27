@@ -47,6 +47,11 @@ public class CamaService {
         return queryCamas(camas);
     }
 
+    public List<CamaDTO> findCamaByGrupoSubTipo(String grupo, String subgrupo, String tipo){
+        List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipo(grupo, subgrupo, tipo);
+        return queryCamas(camas);
+    }
+
     public List<CamaDTO> findCamaByGrupoSubTipoEstado(String grupo, String subgrupo, String tipo, String estado){
         List<Cama> camas = camaRepo.findByGrupoAndSubgrupoAndTipoAndEstado(grupo, subgrupo, tipo, estado);
         return queryCamas(camas);

@@ -37,6 +37,11 @@ public class
         return ResponseEntity.ok().body(camaService.findCamaByGrupoSub(grupo, sub));
     }
 
+    @GetMapping("/find/grupo={def}/subgrupo={sub}/tipo={tipo}")
+    public ResponseEntity<List<CamaDTO>> getCamaByGrupoAndSubAndTipo(@PathVariable("def") String grupo, @PathVariable("sub") String sub, @PathVariable("tipo") String tipo){
+        return ResponseEntity.ok().body(camaService.findCamaByGrupoSubTipo(grupo, sub, tipo));
+    }
+
     @GetMapping("/find/grupo={def}/subgrupo={sub}/tipo={tipo}/estado={est}")
     public ResponseEntity<List<CamaDTO>> getCamaByGrupoAndSubAndTipoEstado(@PathVariable("def") String grupo, @PathVariable("sub") String sub, @PathVariable("tipo") String tipo,  @PathVariable("est") String estado){
         return ResponseEntity.ok().body(camaService.findCamaByGrupoSubTipoEstado(grupo, sub, tipo, estado));
