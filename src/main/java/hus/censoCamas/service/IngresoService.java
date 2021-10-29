@@ -65,7 +65,7 @@ public class IngresoService {
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
-        nuevo.setCama(ingreso.getCama().getCodigoCama());
+        nuevo.setCama(setCama(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
         nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
@@ -73,6 +73,16 @@ public class IngresoService {
         nuevo.setCausaIngreso(causaIngreso[ingreso.getCausa()]);
         nuevo.setEstado(estadoIngreso[ingreso.getEstado()]);
         return nuevo;
+    }
+
+    private String setCama(Ingreso ingreso){
+        Cama cama = ingreso.getCama();
+        if(cama.isOcupada()){
+            return cama.getCodigoCama();
+        }
+        else{
+            return null;
+        }
     }
 
    public Ingreso updateIngresoCamaParaTraslado(int consecutivo, String codigo){
