@@ -1,13 +1,9 @@
 package hus.censoCamas.service;
 
 import hus.censoCamas.exception.ObjectNotFoundException;
-import hus.censoCamas.model.Cama;
-import hus.censoCamas.model.Ingreso;
+import hus.censoCamas.model.*;
 import hus.censoCamas.dtos.IngresoDTO;
-import hus.censoCamas.model.Paciente;
-import hus.censoCamas.repo.CamaRepo;
-import hus.censoCamas.repo.IngresoRepo;
-import hus.censoCamas.repo.PacienteRepo;
+import hus.censoCamas.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

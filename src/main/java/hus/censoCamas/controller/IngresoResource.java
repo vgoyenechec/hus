@@ -4,8 +4,7 @@ import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.dtos.IngresoDTO;
 import hus.censoCamas.service.IngresoService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
