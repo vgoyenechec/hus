@@ -65,7 +65,7 @@ public class IngresoService {
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
-        nuevo.setCama(ingreso.getCama().getCodigoCama());
+        nuevo.setCama(setCama(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
         nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
@@ -75,6 +75,15 @@ public class IngresoService {
         return nuevo;
     }
 
+    private String setCama(Ingreso ingreso){
+        Cama cama = ingreso.getCama();
+        if(cama.isOcupada()){
+            return cama.getCodigoCama();
+        }
+        else{
+            return null;
+        }
+    }
    public Ingreso updateIngresoCamaParaTraslado(int consecutivo, String codigo){
         Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
         Cama nuevaCama = camaRepo.findByCodigoAndDesocupada(codigo).orElseThrow(()-> new ObjectNotFoundException("\nNo encontró cama disponible con codigo "+codigo));
