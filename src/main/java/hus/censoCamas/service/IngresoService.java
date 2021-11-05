@@ -65,7 +65,7 @@ public class IngresoService {
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
-        nuevo.setCama(setCama(ingreso));
+        nuevo.setCama(setCamaIngreso(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
         nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
@@ -75,7 +75,7 @@ public class IngresoService {
         return nuevo;
     }
 
-    private String setCama(Ingreso ingreso){
+    private String setCamaIngreso(Ingreso ingreso){
         Cama cama = ingreso.getCama();
         if(cama.isOcupada()){
             return cama.getCodigoCama();

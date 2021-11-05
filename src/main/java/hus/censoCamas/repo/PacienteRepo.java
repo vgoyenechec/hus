@@ -1,11 +1,9 @@
 package hus.censoCamas.repo;
 
 import hus.censoCamas.model.Paciente;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
     Optional<Paciente> findPacienteById(Integer id);
