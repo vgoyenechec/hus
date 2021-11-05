@@ -21,16 +21,16 @@ public class CamaService {
         this.camaRepo = camaRepo;
     }
 
-    public void bloquearCama(String codigo){
+    public Cama bloquearCama(String codigo){
         Cama cama = findByCodigoCama(codigo);
         cama.bloquearCama();
-        camaRepo.save(cama);
+        return camaRepo.save(cama);
     }
 
-    public void desbloquearCama(String codigo){
+    public Cama desbloquearCama(String codigo){
         Cama cama = findByCodigoCama(codigo);
         cama.desbloquearCama();
-        camaRepo.save(cama);
+        return camaRepo.save(cama);
     }
 
     public Cama findByCodigoCama(String codigo){
