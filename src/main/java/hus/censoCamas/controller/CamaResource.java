@@ -46,4 +46,14 @@ public class
     public ResponseEntity<Cama> findByCodigo(@PathVariable("codigo") String codigo){
         return ResponseEntity.ok().body(camaService.findByCodigoCama(codigo));
     }
+
+    @PutMapping("/bloquear/codigo={codigo}")
+    public ResponseEntity<Cama> bloquearCama(@PathVariable("codigo") String codigo){
+        return ResponseEntity.ok().body(camaService.bloquearCama(codigo));
+    }
+
+    @PutMapping("/desbloquear/codigo={codigo}")
+    public ResponseEntity<Cama> desbloquearCama(@PathVariable("codigo") String codigo){
+        return ResponseEntity.ok().body(camaService.desbloquearCama(codigo));
+    }
 }
