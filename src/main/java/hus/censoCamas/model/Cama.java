@@ -18,22 +18,19 @@ public class Cama implements Serializable{
     @Column(name = "HCAESTADO")
     private int estado;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "HPNGRUPOS", referencedColumnName = "OID")
     private Grupo grupo;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "HPNSUBGRU", referencedColumnName = "OID")
     private Subgrupo subgrupo;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "HPNTIPOCA", referencedColumnName = "OID")
     private Tipocama tipo;
 
-
-    public Cama(){
-        
-    }
+    public Cama(){ }
 
     public Cama(Integer id, String  codigo, String nombre, Grupo grupo, Subgrupo subgrupo, Tipocama tipo, int estado) {
         this.id = id;
@@ -53,8 +50,6 @@ public class Cama implements Serializable{
 
     public void desbloquearCama(){ setEstadoCama(1); }
 
-    public boolean isDesocupada(){ return getEstadoCama() == 1; }
-
     public boolean isOcupada(){
         return getEstadoCama() == 2;
     }
@@ -63,7 +58,7 @@ public class Cama implements Serializable{
         return getEstadoCama() == 3;
     }
 
-    public void checkEstado(){
+    public void checkEstadoParaLiberar(){
         if(isBloqueada()){
             throw new ObjectNotFoundException("\nCama Bloqueada!");
         }
@@ -76,10 +71,6 @@ public class Cama implements Serializable{
 
     public String getCodigoCama() {
         return codigo;
-    }
-
-    public String getNombreCama() {
-        return nombre;
     }
 
     public Grupo getGrupo() {

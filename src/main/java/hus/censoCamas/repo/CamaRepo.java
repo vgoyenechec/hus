@@ -7,8 +7,6 @@ import java.util.*;
 
 public interface CamaRepo extends JpaRepository<Cama, Integer> {
 
-    List<Cama> findAll();
-
     @Query(value = "select distinct c.* \n"+
             "from HPNDEFCAM as c                \n"+
             "JOIN HPNTIPOCA as t                \n"+

@@ -51,10 +51,9 @@ public class Ingreso implements Serializable {
 
     public void ifCamaOcupadaLiberar(){
         if (getCama().isOcupada()) {
-            getCama().liberarCama();
-            setCama(null);
+            liberarCama();
         } else {
-            getCama().checkEstado();
+            getCama().checkEstadoParaLiberar();
         }
     }
 
@@ -64,15 +63,19 @@ public class Ingreso implements Serializable {
         setCama(nuevaCama);
     }
 
+    public void desvincularCama(){
+        if(isCamaVinculada()){
+            liberarCama();
+        }
+    }
+
     public boolean isCamaVinculada(){
         return getCama() != null;
     }
 
-    public void desvincularCama(){
-        if(isCamaVinculada()){
-            getCama().liberarCama();
-            setCama(null);
-        }
+    private void liberarCama(){
+        getCama().liberarCama();
+        setCama(null);
     }
 
     public int getIdPaciente(){

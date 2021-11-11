@@ -37,19 +37,19 @@ public class IngresoService {
 
     public List<IngresoDTO> findByPacienteName(String nombre){
         List<Ingreso> ingresos  = ingresoRepo.findIngresoRegistradoByPacienteNombre(nombre).orElseThrow(() -> new ObjectNotFoundException("no hay"));
-        return findPacientesList(ingresos);
+        return findPacientesLista(ingresos);
     }
 
     public List<IngresoDTO> findByPacienteDoc(String doc){
         List<Ingreso> ingresos  = ingresoRepo.findIngresoRegistradoByPacienteDocumento(doc).orElseThrow(() -> new ObjectNotFoundException("no hay"));
-        return findPacientesList(ingresos);
+        return findPacientesLista(ingresos);
     }
 
-    private List<IngresoDTO> findPacientesList(List<Ingreso> ingresos){
+    private List<IngresoDTO> findPacientesLista(List<Ingreso> ingresos){
         List<IngresoDTO> dtos = new ArrayList<>();
         ingresos.forEach(ingreso -> {
             try{
-                Paciente paciente = pacienteRepo.findPacienteById(ingreso.getIdPaciente()).orElseThrow(() -> new ObjectNotFoundException("no hay paciente"));
+                Paciente paciente = pacienteRepo.findPacienteById(ingreso.getIdPaciente()).orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
                 dtos.add(mapIngresoDTO(paciente, ingreso));
             }
             catch(Exception ignored){}
@@ -61,7 +61,7 @@ public class IngresoService {
         IngresoDTO nuevo = new IngresoDTO();
         nuevo.setDocumento(paciente.getDocumento());
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
-        nuevo.setCama(setCama(ingreso));
+        nuevo.setCama(setCamaIngreso(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
         nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
@@ -71,7 +71,7 @@ public class IngresoService {
         return nuevo;
     }
 
-    private String setCama(Ingreso ingreso){
+    private String setCamaIngreso(Ingreso ingreso){
         Cama cama = ingreso.getCama();
         if(cama.isOcupada()){
             return cama.getCodigoCama();
@@ -81,7 +81,7 @@ public class IngresoService {
         }
     }
 
-   public Ingreso updateIngresoCamaParaTraslado(int consecutivo, String codigo){
+   public Ingreso updateCamaEnIngresoParaTraslado(int consecutivo, String codigo){
         Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
         Cama nuevaCama = camaRepo.findByCodigoAndDesocupada(codigo).orElseThrow(()-> new ObjectNotFoundException("\nNo encontró cama disponible con codigo "+codigo));
 
@@ -90,13 +90,13 @@ public class IngresoService {
         return ingreso;
     }
 
-    public void liberarCamaIngreso(int id) {
+    public void liberarCamaIngreso(int consecutivo) {
         try{
-            Ingreso ingreso = getIngresoByConsecutivo(id);
+            Ingreso ingreso = getIngresoByConsecutivo(consecutivo);
             ingreso.ifCamaOcupadaLiberar();
         }
         catch (Exception e){
-            throw new ObjectNotFoundException("Cama no vinculada a Ingreso!");
+            throw new ObjectNotFoundException("Cama no vinculada a Ingreso "+consecutivo);
         }
     }
 

@@ -22,10 +22,6 @@ public class
     public ResponseEntity<List<CamaDTO>> findAll(){
         return ResponseEntity.ok().body(camaService.findAll());
     }
-    @GetMapping("/find/alln")
-    public ResponseEntity<List<Cama>> findAllNude(){
-        return ResponseEntity.ok().body(camaService.findAllNude());
-    }
 
     @GetMapping("/find/grupo={def}")
     public ResponseEntity<List<CamaDTO>> getCamaByGrupo(@PathVariable("def") String grupo){
