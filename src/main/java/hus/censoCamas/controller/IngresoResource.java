@@ -34,12 +34,12 @@ public class IngresoResource {
         return ResponseEntity.ok().body(ingresoService.findByPacienteName(nombre));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("update/ingreso={ing}/cama={cama}")
     public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
         return ResponseEntity.ok().body(ingresoService.updateCamaEnIngresoParaTraslado(ing, cama));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("update/ingreso={ing}")
     public ResponseEntity<Cama> liberarCamaEnIngreso(@PathVariable("ing") int ing){
         ingresoService.liberarCamaIngreso(ing);
