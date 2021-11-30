@@ -74,13 +74,12 @@ public class UsuarioResource {
         Usuario usuario =
                 new Usuario(nuevoUsuario.getUsuario(), nuevoUsuario.getNombre(), passwordEncoder.encode(nuevoUsuario.getClave()));
         Set<Rol> roles = new HashSet<>();
-        roles.add(rolService.getRolByNombre(Roles.ROLE_USER));
         if(nuevoUsuario.getRoles().contains("admin")){
+            roles.add(rolService.getRolByNombre(Roles.ROLE_USER));
             roles.add(rolService.getRolByNombre(Roles.ROLE_ADMIN));
         }
         if(nuevoUsuario.getRoles().contains("superadmin")){
             roles.add(rolService.getRolByNombre(Roles.ROLE_SUPERADMIN));
-            roles.add(rolService.getRolByNombre(Roles.ROLE_ADMIN));
         }
         usuario.setRoles(roles);
         usuarioService.saveUsuario(usuario);
