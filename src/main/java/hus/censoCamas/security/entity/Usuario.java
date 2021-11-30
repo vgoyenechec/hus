@@ -21,8 +21,8 @@ public class Usuario {
     private String clave;
     @Column(name = "HPNUSUESTADO")
     private boolean isEnabled;
-    @Column(name = "HPNUSUPRIMERAVEZ")
-    private int isPrimeraVez;
+    @Column(name = "HPNUSUCAMBIOCLAVE")
+    private int cambioClave;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "HPNUSUROL", joinColumns = @JoinColumn(name = "OIDUSUARIO"),
@@ -35,7 +35,7 @@ public class Usuario {
         this.usuario = usuario;
         this.nombre = nombre;
         this.clave = clave;
-        this.isPrimeraVez = 0;
+        this.cambioClave = 0;
         this.isEnabled = true;
     }
 
@@ -83,12 +83,12 @@ public class Usuario {
         this.isEnabled = true;
     }
 
-    public int getIsPrimeraVez() {
-        return isPrimeraVez;
+    public int getCambioClave() {
+        return cambioClave;
     }
 
-    public void setIsPrimeraVez(int isPrimeraVez) {
-        this.isPrimeraVez = isPrimeraVez;
+    public void setCambioClave(int cambioClave) {
+        this.cambioClave = cambioClave;
     }
 
     public Set<Rol> getRoles() {
