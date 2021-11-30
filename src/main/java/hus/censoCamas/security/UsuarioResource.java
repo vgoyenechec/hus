@@ -34,6 +34,35 @@ public class UsuarioResource {
     @Autowired
     JwtProvider jwtProvider;
 
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @GetMapping("/find/username={username}")
+    public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
+    }
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @DeleteMapping("/habilitar/{id}")
+    public ResponseEntity<Usuario> habilitarUsuario(@PathVariable("id") int id){
+        usuarioService.enableUsuario(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @DeleteMapping("/deshabilitar/{id}")
+    public ResponseEntity<Usuario> deshabilitarUsuario(@PathVariable("id") int id){
+        usuarioService.disableUsuario(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") int id){
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
     @PostMapping("/signup")
     public ResponseEntity<?> nuevo(@Validated @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
