@@ -1,5 +1,6 @@
 package hus.censoCamas.controller;
 
+import hus.censoCamas.exception.Message;
 import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.dtos.IngresoDTO;
@@ -41,8 +42,9 @@ public class IngresoResource {
     }
 
     @PutMapping("update/ingreso={ing}")
-    public ResponseEntity<Cama> liberarCamaEnIngreso(@PathVariable("ing") int ing){
+    public ResponseEntity<Message> liberarCamaEnIngreso(@PathVariable("ing") int ing){
+        IngresoDTO ingreso = ingresoService.findByConsecutivo(ing);
         ingresoService.liberarCamaIngreso(ing);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<Message>(new Message("Cama "+ingreso.getCama()+" liberada correctamente."), HttpStatus.OK);
     }
 }
