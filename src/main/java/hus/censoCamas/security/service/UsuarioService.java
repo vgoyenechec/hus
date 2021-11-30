@@ -18,10 +18,6 @@ public class UsuarioService {
         usuarioRepo.save(usuario);
     }
 
-    public List<Usuario> findAllUsuarios(){
-        return usuarioRepo.findAll();
-    }
-
     public boolean existeUsuario(String usuario){
         return usuarioRepo.existsByUsuario(usuario);
     }
@@ -29,6 +25,21 @@ public class UsuarioService {
     public void deleteUsuario(int id) {
         usuarioRepo.deleteUsuarioById(id);
     }
+
+    public void disableUsuario(int id){
+        Usuario usuario = usuarioRepo.findById(id)
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+id+" no se ha encontrado"));
+        usuario.disable();
+        usuarioRepo.save(usuario);
+    }
+
+    public void enableUsuario(int id){
+        Usuario usuario = usuarioRepo.findById(id)
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+id+" no se ha encontrado"));
+        usuario.enable();
+        usuarioRepo.save(usuario);
+    }
+
 
     public Usuario findUsuariosByUsername(String username){
         return usuarioRepo.findByUsuario(username)

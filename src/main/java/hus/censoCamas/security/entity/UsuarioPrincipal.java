@@ -46,6 +46,6 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.usuario.isEnabled();
     }
 }

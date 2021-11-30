@@ -11,7 +11,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
     @SequenceGenerator(name="user_generator", sequenceName = "user_sequence", allocationSize=1)
-    @Column(name = "OID",updatable = false,nullable = false)
+    @Column(name = "OID",updatable = false, nullable = false)
     private Integer id;
     @NotNull @Column(name = "HPNUSUNOMBRE")
     private String usuario;
@@ -19,6 +19,11 @@ public class Usuario {
     private String nombre;
     @NotNull @Column(name = "HPNUSUCLAVE")
     private String clave;
+    @Column(name = "HPNUSUESTADO")
+    private boolean isEnabled;
+    @Column(name = "HPNUSUPRIMERAVEZ")
+    private int isPrimeraVez;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "HPNUSUROL", joinColumns = @JoinColumn(name = "OIDUSUARIO"),
             inverseJoinColumns = @JoinColumn(name = "OIDROL") )
@@ -30,6 +35,8 @@ public class Usuario {
         this.usuario = usuario;
         this.nombre = nombre;
         this.clave = clave;
+        this.isPrimeraVez = 0;
+        this.isEnabled = true;
     }
 
     public Integer getId() {
@@ -48,20 +55,40 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getnombre() {
-        return nombre;
-    }
-
-    public void setnombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getClave() {
         return clave;
     }
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void disable() {
+        this.isEnabled = false;
+    }
+
+    public void enable() {
+        this.isEnabled = true;
+    }
+
+    public int getIsPrimeraVez() {
+        return isPrimeraVez;
+    }
+
+    public void setIsPrimeraVez(int isPrimeraVez) {
+        this.isPrimeraVez = isPrimeraVez;
     }
 
     public Set<Rol> getRoles() {
