@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UsuarioRepo extends JpaRepository<Usuario, Integer> {
-    void deleteUsuarioById(Integer id);
+    void deleteByUsuario(String usuario);
 
     Optional<Usuario> findByUsuario(String usuario);
 

@@ -22,8 +22,8 @@ public class UsuarioService {
         return usuarioRepo.existsByUsuario(usuario);
     }
 
-    public void deleteUsuario(int id) {
-        usuarioRepo.deleteUsuarioById(id);
+    public void deleteUsuario(String usuario) {
+        usuarioRepo.deleteByUsuario(usuario);
     }
 
     public void disableUsuario(int id){

@@ -94,9 +94,9 @@ public class UsuarioResource {
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") int id){
-        usuarioService.deleteUsuario(id);
+    @DeleteMapping("/delete/{usuario}")
+    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("usuario") String usuario){
+        usuarioService.deleteUsuario(usuario);
         return ResponseEntity.ok().build();
     }
 }
