@@ -1,5 +1,6 @@
 package hus.censoCamas.security;
 
+import hus.censoCamas.exception.Message;
 import hus.censoCamas.security.constant.Roles;
 import hus.censoCamas.security.dto.*;
 import hus.censoCamas.security.jwt.JwtProvider;
@@ -17,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @RestController
@@ -69,8 +71,36 @@ public class UsuarioResource {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt =  jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        JwtDTO jwtDTO = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+        int cambioClave = usuarioService.findUsuariosByUsername(userDetails.getUsername()).getCambioClave();
+        JwtDTO jwtDTO = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities(), cambioClave);
         return new ResponseEntity<>(jwtDTO,HttpStatus.OK);
+    }
+
+    @PostMapping("/usuario/cambiar-clave")
+    public ResponseEntity<Message> cambiarClave(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, Principal user){
+        String username = user.getName();
+        Message message;
+        Usuario currentUser = usuarioService.findUsuariosByUsername(username);
+        if(passwordEncoder.matches(oldPassword, currentUser.getClave())){
+            currentUser.setClave(passwordEncoder.encode(newPassword));
+            currentUser.setCambioClave(1);
+            usuarioService.saveUsuario(currentUser);
+            message = new Message("Cambio de contraseña exitoso");
+        }
+        else{
+            message = new Message("Contraseña actual incorrecta");
+        }
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    @PostMapping("/reset-clave")
+    public ResponseEntity<Message> resetClave(@RequestParam("newPassword")String newPassword,@RequestParam("username") String username){
+        Usuario currentUser = usuarioService.findUsuariosByUsername(username);
+        currentUser.setClave(passwordEncoder.encode(newPassword));
+        currentUser.setCambioClave(0);
+        usuarioService.saveUsuario(currentUser);
+        return new ResponseEntity<>(new Message("Clave Reseteada"),HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
