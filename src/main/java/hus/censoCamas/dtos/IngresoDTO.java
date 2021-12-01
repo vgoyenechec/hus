@@ -1,13 +1,13 @@
 package hus.censoCamas.dtos;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class IngresoDTO {
     private String documento;
     private String paciente;
     private String cama;
     private int consecutivo;
-    private LocalDate fechaIngreso;
+    private LocalDateTime fechaIngreso;
     private String estado;
     private String tipoIngreso;
     private String causaIngreso;
@@ -39,11 +39,11 @@ public class IngresoDTO {
         this.consecutivo = consecutivo;
     }
 
-    public LocalDate getFechaIngreso() {
+    public LocalDateTime getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(LocalDate fechaIngreso) {
+    public void setFechaIngreso(LocalDateTime fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
@@ -83,6 +83,21 @@ public class IngresoDTO {
 
     public String getCama() {
         return cama;
+    }
+
+    @Override
+    public String toString() {
+        return "IngresoDTO{" +
+                "documento='" + documento + '\'' +
+                ", paciente='" + paciente + '\'' +
+                ", cama='" + cama + '\'' +
+                ", consecutivo=" + consecutivo +
+                ", fechaIngreso=" + fechaIngreso +
+                ", estado='" + estado + '\'' +
+                ", tipoIngreso='" + tipoIngreso + '\'' +
+                ", causaIngreso='" + causaIngreso + '\'' +
+                ", tipoRiesgo='" + tipoRiesgo + '\'' +
+                '}';
     }
 }
 

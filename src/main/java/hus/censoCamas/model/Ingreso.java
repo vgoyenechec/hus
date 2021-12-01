@@ -13,8 +13,6 @@ public class Ingreso implements Serializable {
     private Integer id;
     @Column(name = "AINCONSEC")
     private int consecutivo;
-    @Column(name = "ADNCENATE")
-    private int centroAtencion;
     @Column(name = "AINTIPING")
     private int tipoIngreso;
     @Column(name = "AINCAUING")
@@ -36,10 +34,9 @@ public class Ingreso implements Serializable {
 
     public Ingreso(){ }
 
-    public Ingreso(Integer id, int consecutivo, int centroAtencion, int tipoIngreso, int causa, int tipoRiesgo, Paciente paciente, Cama cama, LocalDateTime fechaIngreso, int estado) {
+    public Ingreso(Integer id, int consecutivo, int tipoIngreso, int causa, int tipoRiesgo, Paciente paciente, Cama cama, LocalDateTime fechaIngreso, int estado) {
         this.id = id;
         this.consecutivo = consecutivo;
-        this.centroAtencion = centroAtencion;
         this.tipoIngreso = tipoIngreso;
         this.causa = causa;
         this.tipoRiesgo = tipoRiesgo;
@@ -116,10 +113,6 @@ public class Ingreso implements Serializable {
 
     public int getEstado() {
         return estado;
-    }
-
-    public int getCentroAtencion() {
-        return centroAtencion;
     }
 
     public int getTipoIngreso() {

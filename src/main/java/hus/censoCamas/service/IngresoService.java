@@ -48,11 +48,11 @@ public class IngresoService {
     private List<IngresoDTO> findPacientesLista(List<Ingreso> ingresos){
         List<IngresoDTO> dtos = new ArrayList<>();
         ingresos.forEach(ingreso -> {
-            try{
-                Paciente paciente = pacienteRepo.findPacienteById(ingreso.getIdPaciente()).orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
+            Paciente paciente = pacienteRepo.findPacienteById(ingreso.getIdPaciente()).orElseThrow(() -> new ObjectNotFoundException("No se encuentra paciente"));
+            boolean noDuplicados = dtos.stream().map(IngresoDTO::getPaciente).noneMatch(String.valueOf(paciente.getNombreCompleto())::equals);
+            if(noDuplicados){
                 dtos.add(mapIngresoDTO(paciente, ingreso));
             }
-            catch(Exception ignored){}
         });
         return dtos;
     }
@@ -63,7 +63,7 @@ public class IngresoService {
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
         nuevo.setCama(setCamaIngreso(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
-        nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
+        nuevo.setFechaIngreso(ingreso.getFechaIngreso());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
         nuevo.setTipoIngreso(tipoIngreso[ingreso.getTipoIngreso()]);
         nuevo.setCausaIngreso(causaIngreso[ingreso.getCausa()]);
@@ -72,13 +72,14 @@ public class IngresoService {
     }
 
     private String setCamaIngreso(Ingreso ingreso){
+        String currentCama = "";
         Cama cama = ingreso.getCama();
-        if(cama.isOcupada()){
-            return cama.getCodigoCama();
+        if(cama!=null){
+            if(cama.isOcupada()){
+                currentCama = cama.getCodigoCama();
+            }
         }
-        else{
-            return null;
-        }
+        return currentCama;
     }
 
    public Ingreso updateCamaEnIngresoParaTraslado(int consecutivo, String codigo){
