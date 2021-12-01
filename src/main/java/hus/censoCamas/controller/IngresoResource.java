@@ -34,7 +34,7 @@ public class IngresoResource {
     public ResponseEntity<List<IngresoDTO>> getIngresoByPacienteNombre(@PathVariable("nombre") String nombre){
         return ResponseEntity.ok().body(ingresoService.findByPacienteName(nombre));
     }
-    
+
     @PutMapping("update/ingreso={ing}/cama={cama}")
     public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
         return ResponseEntity.ok().body(ingresoService.updateCamaEnIngresoParaTraslado(ing, cama));

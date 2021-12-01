@@ -63,7 +63,7 @@ public class IngresoService {
         nuevo.setPaciente(paciente.getNombreCompleto().toUpperCase(Locale.ROOT));
         nuevo.setCama(setCamaIngreso(ingreso));
         nuevo.setConsecutivo(ingreso.getConsecutivo());
-        nuevo.setFechaIngreso(ingreso.getFechaIngreso());
+        nuevo.setFechaIngreso(ingreso.getFechaIngreso().toLocalDate());
         nuevo.setTipoRiesgo(tipoRiesgo[ingreso.getTipoRiesgo()]);
         nuevo.setTipoIngreso(tipoIngreso[ingreso.getTipoIngreso()]);
         nuevo.setCausaIngreso(causaIngreso[ingreso.getCausa()]);

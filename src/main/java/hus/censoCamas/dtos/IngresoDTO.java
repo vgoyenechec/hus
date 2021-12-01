@@ -1,5 +1,6 @@
 package hus.censoCamas.dtos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class IngresoDTO {
@@ -7,7 +8,7 @@ public class IngresoDTO {
     private String paciente;
     private String cama;
     private int consecutivo;
-    private LocalDateTime fechaIngreso;
+    private LocalDate fechaIngreso;
     private String estado;
     private String tipoIngreso;
     private String causaIngreso;
@@ -39,11 +40,11 @@ public class IngresoDTO {
         this.consecutivo = consecutivo;
     }
 
-    public LocalDateTime getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(LocalDateTime fechaIngreso) {
+    public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
