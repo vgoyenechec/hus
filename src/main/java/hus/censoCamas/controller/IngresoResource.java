@@ -1,12 +1,10 @@
 package hus.censoCamas.controller;
 
 import hus.censoCamas.exception.Message;
-import hus.censoCamas.model.Cama;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.dtos.IngresoDTO;
 import hus.censoCamas.service.IngresoService;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
