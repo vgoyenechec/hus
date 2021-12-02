@@ -127,7 +127,7 @@ public class UsuarioResource {
     @DeleteMapping("/delete/{usuario}")
     public ResponseEntity<Message> deleteUsuario(@PathVariable("usuario") String username){
         usuarioService.deleteUsuario(username);
-        return ResponseEntity.ok().body(new Message("Usuario "+username.toUpperCase(Locale.ROOT)+" deshabilitado"));
+        return ResponseEntity.ok().body(new Message("Usuario "+username.toUpperCase(Locale.ROOT)+" ha sido borrado"));
     }
 }
 
