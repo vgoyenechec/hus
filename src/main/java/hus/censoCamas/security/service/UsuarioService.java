@@ -26,16 +26,16 @@ public class UsuarioService {
         usuarioRepo.deleteByUsuario(usuario);
     }
 
-    public void disableUsuario(int id){
-        Usuario usuario = usuarioRepo.findById(id)
-                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+id+" no se ha encontrado"));
+    public void disableUsuario(String username){
+        Usuario usuario = usuarioRepo.findByUsuario(username)
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+username+" no se ha encontrado"));
         usuario.disable();
         usuarioRepo.save(usuario);
     }
 
-    public void enableUsuario(int id){
-        Usuario usuario = usuarioRepo.findById(id)
-                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+id+" no se ha encontrado"));
+    public void enableUsuario(String username){
+        Usuario usuario = usuarioRepo.findByUsuario(username)
+                .orElseThrow(()-> new ObjectNotFoundException("El usuario "+username+" no se ha encontrado"));
         usuario.enable();
         usuarioRepo.save(usuario);
     }
