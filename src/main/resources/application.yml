@@ -18,4 +18,4 @@ spring:
         use_nationalized_character_data: true
 jwt:
   secret: secret
-  expiration: 36000
+  expiration: 45000
