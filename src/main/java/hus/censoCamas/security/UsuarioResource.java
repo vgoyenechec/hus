@@ -76,8 +76,8 @@ public class UsuarioResource {
         return new ResponseEntity<>(jwtDTO,HttpStatus.OK);
     }
 
-    @PostMapping("/usuario/cambiar-clave")
-    public ResponseEntity<Message> cambiarClave(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, Principal user){
+    @PutMapping("/usuario/cambiar-clave/old={oldPassword}/new={newPassword}")
+    public ResponseEntity<Message> cambiarClave(@PathVariable("oldPassword") String oldPassword, @PathVariable("newPassword") String newPassword, Principal user){
         String username = user.getName();
         Message message;
         Usuario currentUser = usuarioService.findUsuariosByUsername(username);
@@ -90,17 +90,17 @@ public class UsuarioResource {
         else{
             message = new Message("Contraseña actual incorrecta");
         }
-        return new ResponseEntity<>(message,HttpStatus.OK);
+        return ResponseEntity.ok().body(message);
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
-    @PostMapping("/reset-clave")
-    public ResponseEntity<Message> resetClave(@RequestParam("newPassword")String newPassword,@RequestParam("username") String username){
+    @PutMapping("/reset-clave/username={username}/reset={newPassword}")
+    public ResponseEntity<Message> resetClave(@PathVariable("newPassword") String newPassword, @PathVariable("username") String username){
         Usuario currentUser = usuarioService.findUsuariosByUsername(username);
         currentUser.setClave(passwordEncoder.encode(newPassword));
         currentUser.setCambioClave(0);
         usuarioService.saveUsuario(currentUser);
-        return new ResponseEntity<>(new Message("Clave Reseteada"),HttpStatus.OK);
+        return ResponseEntity.ok().body(new Message("Clave Reseteada"));
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
@@ -110,24 +110,24 @@ public class UsuarioResource {
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
-    @DeleteMapping("/habilitar/{id}")
-    public ResponseEntity<Usuario> habilitarUsuario(@PathVariable("id") int id){
-        usuarioService.enableUsuario(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/habilitar/{username}")
+    public ResponseEntity<Message> habilitarUsuario(@PathVariable("username") String username){
+        usuarioService.enableUsuario(username);
+        return ResponseEntity.ok().body(new Message("Usuario "+username+" habilitado"));
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
-    @DeleteMapping("/deshabilitar/{id}")
-    public ResponseEntity<Usuario> deshabilitarUsuario(@PathVariable("id") int id){
-        usuarioService.disableUsuario(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/deshabilitar/{username}")
+    public ResponseEntity<Message> deshabilitarUsuario(@PathVariable("username") String username){
+        usuarioService.disableUsuario(username);
+        return ResponseEntity.ok().body(new Message("Usuario "+username.toUpperCase(Locale.ROOT)+" deshabilitado"));
     }
 
     @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{usuario}")
-    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("usuario") String usuario){
-        usuarioService.deleteUsuario(usuario);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Message> deleteUsuario(@PathVariable("usuario") String username){
+        usuarioService.deleteUsuario(username);
+        return ResponseEntity.ok().body(new Message("Usuario "+username.toUpperCase(Locale.ROOT)+" deshabilitado"));
     }
 }
 
