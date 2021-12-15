@@ -7,6 +7,7 @@ import hus.censoCamas.service.IngresoService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -34,14 +35,14 @@ public class IngresoResource {
     }
 
     @PutMapping("update/ingreso={ing}/cama={cama}")
-    public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama){
-        return ResponseEntity.ok().body(ingresoService.updateCamaEnIngresoParaTraslado(ing, cama));
+    public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama, Principal usuario){
+        return ResponseEntity.ok().body(ingresoService.updateCamaEnIngresoParaTraslado(ing, cama,usuario));
     }
 
     @PutMapping("update/ingreso={ing}")
-    public ResponseEntity<Message> liberarCamaEnIngreso(@PathVariable("ing") int ing){
+    public ResponseEntity<Message> liberarCamaEnIngreso(@PathVariable("ing") int ing, Principal usuario){
         IngresoDTO ingreso = ingresoService.findByConsecutivo(ing);
-        ingresoService.liberarCamaIngreso(ing);
+        ingresoService.liberarCamaIngreso(ing, usuario);
         return new ResponseEntity<Message>(new Message("Cama "+ingreso.getCama()+" liberada correctamente."), HttpStatus.OK);
     }
 }
