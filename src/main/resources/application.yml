@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://190.26.4.166;databaseName=DGEmpres81
-    username: estudiantes
-    password: Hus21.uis*
+    url: jdbc:sqlserver://VG;databaseName=DGEmpres81
+    username: sa
+    password: calderon
     driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
     hikari:
       validationTimeout:
