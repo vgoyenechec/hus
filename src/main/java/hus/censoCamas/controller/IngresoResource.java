@@ -4,7 +4,7 @@ import hus.censoCamas.exception.Message;
 import hus.censoCamas.model.Ingreso;
 import hus.censoCamas.dtos.IngresoDTO;
 import hus.censoCamas.service.IngresoService;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -34,15 +34,15 @@ public class IngresoResource {
         return ResponseEntity.ok().body(ingresoService.findByPacienteName(nombre));
     }
 
-    @PutMapping("update/ingreso={ing}/cama={cama}")
+    @PutMapping("traslado/ingreso={ing}/cama={cama}")
     public ResponseEntity<Ingreso> TrasladoCamaEnIngreso(@PathVariable("ing") int ing, @PathVariable("cama") String cama, Principal usuario){
         return ResponseEntity.ok().body(ingresoService.updateCamaEnIngresoParaTraslado(ing, cama,usuario));
     }
 
-    @PutMapping("update/ingreso={ing}")
+    @PutMapping("liberar/ingreso={ing}")
     public ResponseEntity<Message> liberarCamaEnIngreso(@PathVariable("ing") int ing, Principal usuario){
         IngresoDTO ingreso = ingresoService.findByConsecutivo(ing);
         ingresoService.liberarCamaIngreso(ing, usuario);
-        return new ResponseEntity<Message>(new Message("Cama "+ingreso.getCama()+" liberada correctamente."), HttpStatus.OK);
+        return ResponseEntity.ok().body(new Message("Cama "+ingreso.getCama()+" liberada correctamente."));
     }
 }
