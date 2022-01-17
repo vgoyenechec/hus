@@ -76,7 +76,7 @@ public class UsuarioResource {
         return new ResponseEntity<>(jwtDTO,HttpStatus.OK);
     }
 
-    @PutMapping("/usuario/cambiar-clave/old={oldPassword}/new={newPassword}")
+    @PutMapping("cambiar-clave/old={oldPassword}/new={newPassword}")
     public ResponseEntity<Message> cambiarClave(@PathVariable("oldPassword") String oldPassword, @PathVariable("newPassword") String newPassword, Principal user){
         String username = user.getName();
         Message message;
